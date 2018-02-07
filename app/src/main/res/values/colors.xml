@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#FF9800</color>
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#F57C00</color>
+    <color name="colorAccent">#FF5722</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#212121</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="navigationBarColor">#fe000e2d</color>
+    <color name="toolBarTextColor">#FFFF8C</color>
+    <color name="splashOverlay">#4d326bb6</color>
+    <color name="Red">#D0021B</color>
+    <color name="white">#ffffff</color>
+    <color name="alpha_white">#a8ffffff</color>
+    <color name="background">#F4F4F4</color>
+    <color name="black">#000000</color>
+
+    <color name="yellow_rectangle">#F8E71C</color>
+    <color name="yellow_rectangle1">#F5A623</color>
+    <color name="gray_color">#E4E4E4</color>
+    <color name="gray_color_dark">#e1e1e1</color>
+    <color name="gray_color_dark1">#fafafa</color>
+    <color name="gray_color_dark2">#9B9B9B</color>
+
+    <color name="transparent_gray_color">#a3fffdfd</color>
+    <color name="transparent_black_color">#5b000000</color>
+    <color name="sky_blue">#4ce5e9</color>
+    <color name="sky_blue1">#50E3C2</color>
+    <color name="coral_blue">#6a9aff</color>
+    <color name="green">#417505</color>
+    <color name="green1">#7ED321</color>
+    <color name="lightGreen">#1ed7a2</color>
+    <color name="black_trans">#02000000</color>
+    <color name="blue">#4A90E2</color>
+    <color name="blue1">#c44a90e2</color>
+    <color name="redrectangle">#BE0A20</color>
+    <color name="transparent">#00000000</color>
+
+
+    <color name="pointsBlue">#0674F7</color>
+    <color name="dashboardTopBanner">#016DFE</color>
+    <color name="dash_fb">#2B61DD</color>
+    <color name="dash_offer">#FEA100</color>
+    <color name="dash_deals">#DB69E8</color>
+    <color name="dash_near_by_stores">#45D731</color>
+    <color name="dash_recharge">#b4F1A208</color>
+    <color name="success_gray_color">#605f5f</color>
+    <color name="success_lighter_gray_color">#818080</color>
+    <color name="dashboard_background">#F1F1F1</color>
+
+    <!--user guide view-->
+    <color name="dark_green">#417505</color>
+    <color name="dark_blue">#4990E2</color>
+    <color name="dark_purple">#9012FE</color>
+    <color name="dark_brown">#8B572A</color>
+    <color name="dark_red">#D0011B</color>
+
+    <color name="gray_background">#FFD4D4D4</color>
+    <color name="gray_notification_color">#606060</color>
+
+    <color name="dark_black">#FF000000</color>
+    <color name="light_black">#B3000000</color>
+    <color name="transparent_white">#FFFFFFFF</color>
+    <color name="gradient_start_color">#FFD8D8D8</color>
+    <color name="gradient_end_color">#FF3E50B4</color>
+</resources>
+
