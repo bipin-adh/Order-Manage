@@ -5,10 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.CustomAdapter;
@@ -18,7 +19,8 @@ import com.example.bpn8adh.ordermanage.adapters.CustomAdapter;
  */
 public class StartersFragment extends Fragment {
     Context mContext;
-    private GridView gridview;
+    //    private GridView gridview;
+    private RecyclerView recyclerView;
     private static String[] app_name = {
             "Chicken",
             "Soup",
@@ -42,9 +44,10 @@ public class StartersFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // casting xml GridView into javacode
-        gridview = view.findViewById(R.id.gridView);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         // setting up Adapter tp GridView
-        gridview.setAdapter(new CustomAdapter(mContext, app_name, app_icon));
+        recyclerView.setAdapter(new CustomAdapter(mContext, app_name, app_icon, false));
 
     }
 
@@ -52,7 +55,7 @@ public class StartersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_special_offer, container, false);
+        return inflater.inflate(R.layout.fragment_tabs, container, false);
     }
 
 }
