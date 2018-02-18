@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager());
         String tabTitles[] = getResources().getStringArray(R.array.tab_titles);
         adapter.addFragWithTitle(new TodaysSpecialFragment(), tabTitles[0]);
-        adapter.addFragWithTitle(new SoupFragment(), tabTitles[1]);
-        adapter.addFragWithTitle(new StartersFragment(), tabTitles[2]);
+        adapter.addFragWithTitle(new StartersFragment(), tabTitles[1]);
+        adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
         adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);

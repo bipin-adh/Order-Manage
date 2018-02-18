@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.bpn8adh.ordermanage.R;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
+public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder> {
 
     private final boolean isGridView;
     private Context context;
@@ -27,7 +27,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private int[] app_icon;
     private MyViewHolder myViewHolder;
 
-    public CustomAdapter(Context context, String[] app_name, int[] app_icon,boolean isGridView) {
+    public StartersAdapter(Context context, String[] app_name, int[] app_icon, boolean isGridView) {
 
         this.context = context;
         this.app_icon = app_icon;
@@ -39,13 +39,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView;
-        if(isGridView) {
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.custom_grid, parent, false);
-        }else{
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.custom_list, parent, false);
-        }
+//            itemView = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.custom_grid, parent, false);
+        itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_list, parent, false);
 
         myViewHolder = new MyViewHolder(itemView);
         return myViewHolder;
@@ -60,7 +57,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 RoundedBitmapDrawable circularBitmapDrawable =
                         RoundedBitmapDrawableFactory.create(context.getResources(), resource);
 //                circularBitmapDrawable.setCircular(true);
-                circularBitmapDrawable.setCornerRadius(16);
+//                circularBitmapDrawable.setCornerRadius(16);
                 holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
             }
         });
@@ -78,13 +75,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         public MyViewHolder(View view) {
             super(view);
-            if(isGridView) {
-                textViewItemName = view.findViewById(R.id.tv_grid);
-                imageViewItem = view.findViewById(R.id.iv_grid);
-            }else{
-                textViewItemName = view.findViewById(R.id.tv_list);
-                imageViewItem = view.findViewById(R.id.iv_list);
-            }
+            imageViewItem = view.findViewById(R.id.iv_item_logo);
+            textViewItemName =view.findViewById(R.id.tv_item_name);
 
         }
     }

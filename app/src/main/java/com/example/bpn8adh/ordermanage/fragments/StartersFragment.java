@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bpn8adh.ordermanage.R;
-import com.example.bpn8adh.ordermanage.adapters.CustomAdapter;
+import com.example.bpn8adh.ordermanage.adapters.StartersAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +47,7 @@ public class StartersFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         // setting up Adapter tp GridView
-        recyclerView.setAdapter(new CustomAdapter(mContext, app_name, app_icon, false));
+        recyclerView.setAdapter(new StartersAdapter(mContext, app_name, app_icon, false));
 
     }
 
