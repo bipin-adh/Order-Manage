@@ -33,19 +33,19 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.ic_tabs));
-        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_tabs_one));
-        tabLayout.getTabAt(2).setIcon(android.R.drawable.btn_star);
-        tabLayout.getTabAt(3).setIcon(android.R.drawable.ic_menu_upload_you_tube);
+        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(android.R.drawable.btn_star));
+        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_starters_new));
+        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.ic_soup));
+        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.ic_main_course));
 
-        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.primary);
+        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
         tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 //                super.onTabSelected(tab);
-                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.primary);
+                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
                 tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
             }
 

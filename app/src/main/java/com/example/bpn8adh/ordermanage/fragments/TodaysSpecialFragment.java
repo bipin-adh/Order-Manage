@@ -23,9 +23,9 @@ public class TodaysSpecialFragment extends Fragment {
     //    GridView gridview;
     Context mContext;
     private static String[] app_name = {
-            "Camera",
-            "Chrome",
-            "Clock", "Clsfas"};
+            "Chicken biryani",
+            "Jhol momo",
+            "Fried rice", "Chicken chowmein"};
     private static int[] app_icon = {
             R.drawable.food,
             R.drawable.food,

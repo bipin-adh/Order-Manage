@@ -2,7 +2,7 @@
     <string name="app_name">Order Manage</string>
     <string-array name="tab_titles">
         <item>Today\'s Special</item>
-        <item>Starters package</item>
+        <item>Starters</item>
         <item>Soup Deal</item>
         <item>Main Course</item>
     </string-array>
