@@ -1,9 +1,7 @@
 package com.example.bpn8adh.ordermanage.activities;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -33,27 +31,27 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(android.R.drawable.btn_star));
-        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_starters_new));
-        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.ic_soup));
-        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.ic_main_course));
+//        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(android.R.drawable.btn_star));
+//        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_starters_new));
+//        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.ic_soup));
+//        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.ic_main_course));
 
-        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
-        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
+//        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 //                super.onTabSelected(tab);
-                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
+//                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 //                super.onTabSelected(tab);
-                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.gray_color);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.gray_color);
+//                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
             }
 
             @Override
