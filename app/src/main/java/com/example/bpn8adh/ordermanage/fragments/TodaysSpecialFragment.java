@@ -22,15 +22,6 @@ public class TodaysSpecialFragment extends Fragment {
 
     //    GridView gridview;
     Context mContext;
-    private static String[] app_name = {
-            "Chicken biryani",
-            "Jhol momo",
-            "Fried rice", "Chicken chowmein"};
-    private static int[] app_icon = {
-            R.drawable.food,
-            R.drawable.food,
-            R.drawable.food,
-            R.drawable.food};
     private RecyclerView recyclerView;
 
     public TodaysSpecialFragment() {
@@ -47,11 +38,9 @@ public class TodaysSpecialFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // casting xml GridView into javacode
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        // setting up Adapter tp GridView
-        recyclerView.setAdapter(new StartersAdapter(mContext, app_name, app_icon, false));
+//        recyclerView.setAdapter(new StartersAdapter(mContext,null));
 
 
     }

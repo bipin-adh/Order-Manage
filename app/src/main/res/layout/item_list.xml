@@ -4,8 +4,10 @@
     android:id="@+id/cv_item_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginBottom="6dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginTop="6dp"
     android:foreground="?selectableItemBackground"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
@@ -13,7 +15,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:gravity="center"
+        android:padding="16dp">
 
         <RelativeLayout
             android:id="@+id/rl_image"
@@ -23,12 +26,12 @@
 
             <ImageView
                 android:id="@+id/iv_item_logo"
-                android:layout_width="84dp"
-                android:layout_height="78dp"
+                android:layout_width="100dp"
+                android:layout_height="95dp"
                 android:scaleType="fitXY" />
 
             <ProgressBar
-                android:id="@+id/progress_bar"
+                android:id="@+id/item_image_progress_bar"
                 style="?android:attr/progressBarStyleSmall"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -42,10 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/rl_image"
             android:maxLines="2"
-            android:text="Chicken biryani"
             android:textSize="12sp" />
 
         <TextView
@@ -58,7 +60,6 @@
             android:layout_toRightOf="@id/rl_image"
             android:paddingTop="2dp"
             android:singleLine="true"
-            android:text="Rs 350.00"
             android:textColor="@color/colorAccent"
             android:textSize="10sp" />
 
@@ -90,7 +91,6 @@
             android:layout_toRightOf="@id/iv_timer"
             android:paddingTop="2dp"
             android:singleLine="true"
-            android:text="20 mins"
             android:textColor="@color/colorAccent"
             android:textSize="10sp" />
 
@@ -101,12 +101,11 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="4dp"
-            android:layout_toLeftOf="@id/tv_num_of_items"
+            android:layout_toLeftOf="@id/tv_item_quantity"
             android:background="@color/gray_color_dark" />
 
         <TextView
-            android:textColor="@color/gray_color_dark"
-            android:id="@+id/tv_num_of_items"
+            android:id="@+id/tv_item_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -114,7 +113,8 @@
             android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/ll_item_num"
             android:text="1"
-            android:textSize="30sp" />
+            android:textColor="@color/gray_color_dark"
+            android:textSize="24sp" />
 
 
         <LinearLayout
@@ -126,18 +126,26 @@
             android:orientation="vertical">
 
             <ImageView
-                android:padding="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:src="@drawable/ic_minus" />
+                android:id="@+id/iv_quantity_increase"
+                android:layout_width="36dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:background="@color/gray_color_dark"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_add" />
 
             <ImageView
-                android:padding="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/ic_add" />
+                android:id="@+id/iv_quantity_decrease"
+                android:layout_width="36dp"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@color/gray_color_dark"
+                android:padding="12dp"
+                android:src="@drawable/ic_minus" />
 
         </LinearLayout>
 

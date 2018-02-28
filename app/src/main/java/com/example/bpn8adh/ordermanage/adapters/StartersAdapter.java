@@ -9,49 +9,61 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.bpn8adh.ordermanage.R;
+import com.example.bpn8adh.ordermanage.models.FoodDetails;
 
-public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder> {
+import java.util.ArrayList;
 
-    private final boolean isGridView;
+public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder>{
+
+    public static final String TAG = StartersAdapter.class.getSimpleName();
     private Context context;
-    private String[] app_name;
-    private int[] app_icon;
     private MyViewHolder myViewHolder;
+    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
 
-    public StartersAdapter(Context context, String[] app_name, int[] app_icon, boolean isGridView) {
+    private String foodName;
+    private String foodPrice;
+    private String foodPrepTime;
+    private String foodImage;
+
+    private int quantityCount = 0;
+
+    public StartersAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
 
         this.context = context;
-        this.app_icon = app_icon;
-        this.app_name = app_name;
-        this.isGridView = isGridView;
+        this.foodDetailList = foodDetailList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView;
-//            itemView = LayoutInflater.from(parent.getContext())
-//                    .inflate(R.layout.custom_grid, parent, false);
         itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list, parent, false);
 
         myViewHolder = new MyViewHolder(itemView);
         return myViewHolder;
-
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        Glide.with(context).load(app_icon[position]).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageViewItem) {
+        holder.progressBar.setVisibility(View.VISIBLE);
+        foodName = foodDetailList.get(position).getFoodName();
+        foodPrice = foodDetailList.get(position).getFoodPrice();
+        foodImage = foodDetailList.get(position).getFoodImage();
+        foodPrepTime = foodDetailList.get(position).getFoodPreparationTime();
+
+        Glide.with(context).load(foodImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageViewItem) {
             @Override
             protected void setResource(Bitmap resource) {
                 RoundedBitmapDrawable circularBitmapDrawable =
@@ -59,25 +71,74 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
 //                circularBitmapDrawable.setCircular(true);
 //                circularBitmapDrawable.setCornerRadius(16);
                 holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
+                if (holder.progressBar != null) {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
             }
         });
-        holder.textViewItemName.setText(app_name[position]);
+        holder.textViewItemName.setText(foodName);
+        holder.textViewPrepTime.setText(foodPrepTime);
+        holder.textViewPrice.setText(foodPrice);
+
+        holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int addCount = increaseQuantityCount();
+                holder.textViewQuantityTotal.setText(""+addCount);
+            }
+        });
+        holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             int decreaseCount = decreaseQuantityCount();
+             holder.textViewQuantityTotal.setText(""+decreaseCount);
+            }
+        });
+
+//        holder.textViewQuantityTotal.setText(String.valueOf(quantityCount));
     }
 
     @Override
     public int getItemCount() {
-        return app_name.length;
+        return foodDetailList.size();
+    }
+
+    private int decreaseQuantityCount() {
+        if (quantityCount > 0) {
+            quantityCount--;
+        }
+        Log.d(TAG, "aaaa decreaseQuantityCount: - --->" + quantityCount);
+        return quantityCount;
+    }
+
+    private int increaseQuantityCount() {
+        quantityCount++;
+        Log.d(TAG, "aaaa increaseQuantityCount: + ---> " + quantityCount);
+        return quantityCount;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textViewItemName;
+        TextView textViewPrepTime;
+        TextView textViewQuantityTotal;
+        TextView textViewPrice;
+
+        ProgressBar progressBar;
         ImageView imageViewItem;
+        ImageView imageViewQuantityIncrease;
+        ImageView imageViewQuantityDecrease;
 
         public MyViewHolder(View view) {
             super(view);
-            imageViewItem = view.findViewById(R.id.iv_item_logo);
-            textViewItemName =view.findViewById(R.id.tv_item_name);
+            textViewItemName = view.findViewById(R.id.tv_item_name);
+            textViewPrepTime = view.findViewById(R.id.tv_time);
+            textViewPrice = view.findViewById(R.id.tv_price);
+            progressBar = view.findViewById(R.id.item_image_progress_bar);
 
+            imageViewItem = view.findViewById(R.id.iv_item_logo);
+            imageViewQuantityIncrease = view.findViewById(R.id.iv_quantity_increase);
+            imageViewQuantityDecrease = view.findViewById(R.id.iv_quantity_decrease);
+            textViewQuantityTotal = view.findViewById(R.id.tv_item_quantity);
         }
     }
 }
