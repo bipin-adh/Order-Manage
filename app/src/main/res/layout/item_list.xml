@@ -129,9 +129,8 @@
                 android:layout_width="36dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="4dp"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@drawable/ripple"
                 android:clickable="true"
-                android:background="@color/gray_color_dark"
                 android:padding="12dp"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_add" />
@@ -141,8 +140,7 @@
                 android:layout_width="36dp"
                 android:layout_height="50dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:background="@color/gray_color_dark"
+                android:background="@drawable/ripple"
                 android:padding="12dp"
                 android:src="@drawable/ic_minus" />
 

@@ -9,6 +9,15 @@ public class FoodDetails {
     String foodPrice;
     String foodPreparationTime;
     String foodImage;
+    int foodQuantity;
+
+    public int getFoodQuantity() {
+        return foodQuantity;
+    }
+
+    public void setFoodQuantity(int foodQuantity) {
+        this.foodQuantity = foodQuantity;
+    }
 
     public String getFoodName() {
         return foodName;

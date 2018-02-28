@@ -34,6 +34,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     private String foodPrice;
     private String foodPrepTime;
     private String foodImage;
+    private int foodQuantity;
 
     private int quantityCount = 0;
 
@@ -55,14 +56,16 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
+        quantityCount=0;
         foodName = foodDetailList.get(position).getFoodName();
         foodPrice = foodDetailList.get(position).getFoodPrice();
         foodImage = foodDetailList.get(position).getFoodImage();
         foodPrepTime = foodDetailList.get(position).getFoodPreparationTime();
+        foodQuantity = foodDetailList.get(position).getFoodQuantity();
 
-        holder.textViewQuantityTotal.setText("" + 0);
+        holder.textViewQuantityTotal.setText("" + foodQuantity);
         Glide.with(context).load(foodImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageViewItem) {
             @Override
             protected void setResource(Bitmap resource) {
