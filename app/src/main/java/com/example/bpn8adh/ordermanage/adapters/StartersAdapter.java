@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import com.example.bpn8adh.ordermanage.models.FoodDetails;
 
 import java.util.ArrayList;
 
-public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder>{
+public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder> {
 
     public static final String TAG = StartersAdapter.class.getSimpleName();
     private Context context;
@@ -63,6 +62,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         foodImage = foodDetailList.get(position).getFoodImage();
         foodPrepTime = foodDetailList.get(position).getFoodPreparationTime();
 
+        holder.textViewQuantityTotal.setText("" + 0);
         Glide.with(context).load(foodImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageViewItem) {
             @Override
             protected void setResource(Bitmap resource) {
@@ -84,18 +84,22 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
             @Override
             public void onClick(View view) {
                 int addCount = increaseQuantityCount();
-                holder.textViewQuantityTotal.setText(""+addCount);
+                holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                holder.textViewQuantityTotal.setText("" + addCount);
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             int decreaseCount = decreaseQuantityCount();
-             holder.textViewQuantityTotal.setText(""+decreaseCount);
+                int decreaseCount = decreaseQuantityCount();
+                if (decreaseCount == 0) {
+                    holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
+                } else {
+                    holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                }
+                holder.textViewQuantityTotal.setText("" + decreaseCount);
             }
         });
-
-//        holder.textViewQuantityTotal.setText(String.valueOf(quantityCount));
     }
 
     @Override
@@ -107,13 +111,11 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         if (quantityCount > 0) {
             quantityCount--;
         }
-        Log.d(TAG, "aaaa decreaseQuantityCount: - --->" + quantityCount);
         return quantityCount;
     }
 
     private int increaseQuantityCount() {
         quantityCount++;
-        Log.d(TAG, "aaaa increaseQuantityCount: + ---> " + quantityCount);
         return quantityCount;
     }
 

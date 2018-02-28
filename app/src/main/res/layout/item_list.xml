@@ -112,7 +112,6 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/ll_item_num"
-            android:text="1"
             android:textColor="@color/gray_color_dark"
             android:textSize="24sp" />
 
