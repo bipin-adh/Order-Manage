@@ -36,7 +36,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     private String foodImage;
     private int foodQuantity;
 
-    private int quantityCount = 0;
+//    private int quantityCount = 0;
 
     public StartersAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
 
@@ -58,14 +58,14 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
-        quantityCount=0;
-        foodName = foodDetailList.get(position).getFoodName();
-        foodPrice = foodDetailList.get(position).getFoodPrice();
-        foodImage = foodDetailList.get(position).getFoodImage();
-        foodPrepTime = foodDetailList.get(position).getFoodPreparationTime();
+        holder.textViewQuantityTotal.setText("" + 0);
+        final FoodDetails foodDetails = foodDetailList.get(position);
+        foodName = foodDetails.getFoodName();
+        foodPrice = foodDetails.getFoodPrice();
+        foodImage = foodDetails.getFoodImage();
+        foodPrepTime = foodDetails.getFoodPreparationTime();
         foodQuantity = foodDetailList.get(position).getFoodQuantity();
 
-        holder.textViewQuantityTotal.setText("" + foodQuantity);
         Glide.with(context).load(foodImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageViewItem) {
             @Override
             protected void setResource(Bitmap resource) {
@@ -83,24 +83,29 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         holder.textViewPrepTime.setText(foodPrepTime);
         holder.textViewPrice.setText(foodPrice);
 
+        holder.imageViewQuantityIncrease.setTag(position);
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int addCount = increaseQuantityCount();
                 holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
-                holder.textViewQuantityTotal.setText("" + addCount);
+                foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
+                holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
             }
         });
+        holder.imageViewQuantityDecrease.setTag(position);
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int decreaseCount = decreaseQuantityCount();
-                if (decreaseCount == 0) {
-                    holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
-                } else {
+                if (foodDetails.getFoodQuantity() > 0) {
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                    foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
+                    holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
+                    if (foodDetails.getFoodQuantity() == 0) {
+                        holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
+                    }
+                } else {
+                    holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
                 }
-                holder.textViewQuantityTotal.setText("" + decreaseCount);
             }
         });
     }
@@ -110,17 +115,17 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         return foodDetailList.size();
     }
 
-    private int decreaseQuantityCount() {
-        if (quantityCount > 0) {
-            quantityCount--;
-        }
-        return quantityCount;
-    }
-
-    private int increaseQuantityCount() {
-        quantityCount++;
-        return quantityCount;
-    }
+//    private int decreaseQuantityCount() {
+//        if (quantityCount > 0) {
+//            quantityCount--;
+//        }
+//        return quantityCount;
+//    }
+//
+//    private int increaseQuantityCount() {
+//        quantityCount++;
+//        return quantityCount;
+//    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textViewItemName;

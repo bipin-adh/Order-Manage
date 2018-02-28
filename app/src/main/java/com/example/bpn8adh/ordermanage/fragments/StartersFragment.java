@@ -45,6 +45,7 @@ public class StartersFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
         startersAdapter = new StartersAdapter(mContext, foodDetailList);
+        startersAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(startersAdapter);
     }
 
