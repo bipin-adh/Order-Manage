@@ -5,11 +5,11 @@ package com.example.bpn8adh.ordermanage.models;
  */
 
 public class FoodDetails {
-    String foodName;
-    String foodPrice;
-    String foodPreparationTime;
-    String foodImage;
-    int foodQuantity;
+    private String foodName;
+    private String foodPrice;
+    private String foodPreparationTime;
+    private String foodImage;
+    private int foodQuantity;
 
     public int getFoodQuantity() {
         return foodQuantity;

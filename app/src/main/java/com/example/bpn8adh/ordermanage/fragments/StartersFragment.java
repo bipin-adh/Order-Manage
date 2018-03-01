@@ -40,13 +40,16 @@ public class StartersFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (foodDetailList.size() != 0) {
+            foodDetailList.clear();
+        }
         setItemDetails();
         recyclerView = view.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
         startersAdapter = new StartersAdapter(mContext, foodDetailList);
-        startersAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(startersAdapter);
+        startersAdapter.notifyDataSetChanged();
     }
 
     @Override

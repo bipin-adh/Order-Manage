@@ -25,21 +25,17 @@ import java.util.ArrayList;
 
 public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder> {
 
-    public static final String TAG = StartersAdapter.class.getSimpleName();
+    private int DEFAULT_ITEM_QUANTITY_VALUE = 0;
     private Context context;
     private MyViewHolder myViewHolder;
-    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
 
+    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
     private String foodName;
     private String foodPrice;
     private String foodPrepTime;
     private String foodImage;
-    private int foodQuantity;
-
-//    private int quantityCount = 0;
 
     public StartersAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
-
         this.context = context;
         this.foodDetailList = foodDetailList;
     }
@@ -58,15 +54,19 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
-        holder.textViewQuantityTotal.setText("" + 0);
+        holder.textViewQuantityTotal.setText("" + DEFAULT_ITEM_QUANTITY_VALUE);
         final FoodDetails foodDetails = foodDetailList.get(position);
         foodName = foodDetails.getFoodName();
         foodPrice = foodDetails.getFoodPrice();
         foodImage = foodDetails.getFoodImage();
         foodPrepTime = foodDetails.getFoodPreparationTime();
-        foodQuantity = foodDetailList.get(position).getFoodQuantity();
 
-        Glide.with(context).load(foodImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageViewItem) {
+        Glide.with(context)
+                .load(foodImage)
+                .asBitmap()
+                .error(R.drawable.error_no_preview)
+                .centerCrop()
+                .into(new BitmapImageViewTarget(holder.imageViewItem) {
             @Override
             protected void setResource(Bitmap resource) {
                 RoundedBitmapDrawable circularBitmapDrawable =
@@ -83,7 +83,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         holder.textViewPrepTime.setText(foodPrepTime);
         holder.textViewPrice.setText(foodPrice);
 
-        holder.imageViewQuantityIncrease.setTag(position);
+//        holder.imageViewQuantityIncrease.setTag(position);
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +92,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
             }
         });
-        holder.imageViewQuantityDecrease.setTag(position);
+//        holder.imageViewQuantityDecrease.setTag(position);
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,18 +114,6 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     public int getItemCount() {
         return foodDetailList.size();
     }
-
-//    private int decreaseQuantityCount() {
-//        if (quantityCount > 0) {
-//            quantityCount--;
-//        }
-//        return quantityCount;
-//    }
-//
-//    private int increaseQuantityCount() {
-//        quantityCount++;
-//        return quantityCount;
-//    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textViewItemName;
