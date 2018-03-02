@@ -1,74 +1,46 @@
-package com.example.bpn8adh.ordermanage.fragments;
+package com.example.bpn8adh.ordermanage.activities;
 
-
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.bpn8adh.ordermanage.R;
-import com.example.bpn8adh.ordermanage.activities.CartActivity;
-import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
+import com.example.bpn8adh.ordermanage.adapters.CartAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by bpn8adh on 02/03/18.
  */
-public class TodaysSpecialFragment extends Fragment implements View.OnClickListener {
-    Context mContext;
+
+public class CartActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-
-    private TodaysSpecialAdapter todaysSpecialAdapter;
     private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
 
-    private Button addToCartBtn;
-
-    public TodaysSpecialFragment() {
-        // Required empty public constructor
+    public static void launchActivity(Activity activity) {
+        Intent intent = new Intent(activity, CartActivity.class);
+        activity.startActivity(intent);
     }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mContext = context;
-    }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_cart);
+        recyclerView = findViewById(R.id.recycler_view_cart);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        if (foodDetailList.size() != 0) {
-            foodDetailList.clear();
-        }
         setItemDetails();
-        recyclerView = view.findViewById(R.id.recyclerView);
-        addToCartBtn = view.findViewById(R.id.add_to_cart);
-
-        linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, foodDetailList);
-        recyclerView.setAdapter(todaysSpecialAdapter);
-        todaysSpecialAdapter.notifyDataSetChanged();
-
-        addToCartBtn.setOnClickListener(this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tabs, container, false);
+        CartAdapter cartAdapter = new CartAdapter(CartActivity.this, foodDetailList);
+        recyclerView.setAdapter(cartAdapter);
+        cartAdapter.notifyDataSetChanged();
     }
 
     private void setItemDetails() {
@@ -103,15 +75,5 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
         foodDetails3.setFoodQuantity(0);
         foodDetails3.setFoodImage("http://ninjacoffeebarrecipes.com/wp-content/uploads/2015/12/Cafe_Mocha.jpg");
         foodDetailList.add(foodDetails3);
-    }
-
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.add_to_cart:
-                CartActivity.launchActivity(getActivity());
-                break;
-        }
     }
 }
