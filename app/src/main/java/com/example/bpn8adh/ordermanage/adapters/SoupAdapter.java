@@ -83,7 +83,6 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
         holder.textViewPrepTime.setText(foodPrepTime);
         holder.textViewPrice.setText(String.format(context.getString(R.string.item_price),foodPrice));
 
-        holder.imageViewQuantityIncrease.setTag(position);
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +91,6 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
             }
         });
-        holder.imageViewQuantityDecrease.setTag(position);
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

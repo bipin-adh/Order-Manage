@@ -67,23 +67,22 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                 .error(R.drawable.error_no_preview)
                 .centerCrop()
                 .into(new BitmapImageViewTarget(holder.imageViewItem) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
 //                circularBitmapDrawable.setCircular(true);
 //                circularBitmapDrawable.setCornerRadius(16);
-                holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
-                if (holder.progressBar != null) {
-                    holder.progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
+                        holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
+                        if (holder.progressBar != null) {
+                            holder.progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
         holder.textViewItemName.setText(foodName);
         holder.textViewPrepTime.setText(foodPrepTime);
-        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price),foodPrice));
+        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price), foodPrice));
 
-//        holder.imageViewQuantityIncrease.setTag(position);
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +91,6 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
             }
         });
-//        holder.imageViewQuantityDecrease.setTag(position);
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
