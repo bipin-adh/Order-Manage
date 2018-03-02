@@ -63,6 +63,7 @@
             android:layout_toRightOf="@id/rl_image"
             android:paddingTop="2dp"
             android:singleLine="true"
+            android:text="@string/item_price"
             android:textColor="@color/colorAccent"
             android:textSize="10sp" />
 

@@ -31,7 +31,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
 
     private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
     private String foodName;
-    private String foodPrice;
+    private int foodPrice;
     private String foodPrepTime;
     private String foodImage;
 
@@ -81,7 +81,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
         });
         holder.textViewItemName.setText(foodName);
         holder.textViewPrepTime.setText(foodPrepTime);
-        holder.textViewPrice.setText(foodPrice);
+        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price),foodPrice));
 
         holder.imageViewQuantityIncrease.setTag(position);
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {

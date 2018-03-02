@@ -20,6 +20,8 @@
             android:clipToPadding="false" />
         <Button
             android:layout_width="match_parent"
+            android:padding="12dp"
+            android:layout_gravity="center"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
@@ -27,7 +29,7 @@
             android:layout_weight="1"
             android:background="@drawable/rounded_corner_btn"
             android:gravity="center"
-            android:text="Order"
+            android:text="Add to cart"
             android:textAlignment="center"
             android:textColor="@color/white" />
 

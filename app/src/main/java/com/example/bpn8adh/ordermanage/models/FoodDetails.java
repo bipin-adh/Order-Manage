@@ -6,7 +6,7 @@ package com.example.bpn8adh.ordermanage.models;
 
 public class FoodDetails {
     private String foodName;
-    private String foodPrice;
+    private int foodPrice;
     private String foodPreparationTime;
     private String foodImage;
     private int foodQuantity;
@@ -35,11 +35,11 @@ public class FoodDetails {
         this.foodImage = foodImage;
     }
 
-    public String getFoodPrice() {
+    public int getFoodPrice() {
         return foodPrice;
     }
 
-    public void setFoodPrice(String foodPrice) {
+    public void setFoodPrice(int foodPrice) {
         this.foodPrice = foodPrice;
     }
 
