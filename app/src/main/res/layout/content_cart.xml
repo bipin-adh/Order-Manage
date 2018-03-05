@@ -1,10 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="6"
-    tools:context="com.example.bpn8adh.ordermanage.fragments.CartFragment">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.CartActivity"
+    tools:showIn="@layout/activity_cart">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
@@ -18,33 +21,44 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
+        android:layout_marginRight="8dp"
+        android:layout_weight="0.8"
+        android:backgroundTint="@color/red">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="Total Price(Rs)"
-                android:textColor="@color/red" />
+                android:textColor="@color/white" />
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:padding="8dp"
+                android:src="@drawable/ic_equals_white" />
+
+            <TextView
+                android:id="@+id/cart_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="500"
-                android:textColor="@color/red" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -53,7 +67,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"

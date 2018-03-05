@@ -23,8 +23,9 @@ import java.util.ArrayList;
  * Created by Bipin on 28/02/18.
  */
 
-public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdapter.MyViewHolder>{
+public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdapter.MyViewHolder> {
 
+    public static final String TAG = TodaysSpecialAdapter.class.getSimpleName();
     private int DEFAULT_ITEM_QUANTITY_VALUE = 0;
     private Context context;
     private MyViewHolder myViewHolder;
@@ -55,6 +56,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
     public void onBindViewHolder(final TodaysSpecialAdapter.MyViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
         holder.textViewQuantityTotal.setText("" + DEFAULT_ITEM_QUANTITY_VALUE);
+
         final FoodDetails foodDetails = foodDetailList.get(position);
         foodName = foodDetails.getFoodName();
         foodPrice = foodDetails.getFoodPrice();
@@ -67,21 +69,21 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 .error(R.drawable.error_no_preview)
                 .centerCrop()
                 .into(new BitmapImageViewTarget(holder.imageViewItem) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
 //                circularBitmapDrawable.setCircular(true);
 //                circularBitmapDrawable.setCornerRadius(16);
-                holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
-                if (holder.progressBar != null) {
-                    holder.progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
+                        holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
+                        if (holder.progressBar != null) {
+                            holder.progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
         holder.textViewItemName.setText(foodName);
         holder.textViewPrepTime.setText(foodPrepTime);
-        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price),foodPrice));
+        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price), foodPrice));
 
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +100,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
+
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
                     }

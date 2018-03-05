@@ -18,12 +18,13 @@ import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     private final Context context;
-    private final ArrayList<FoodDetails> foodDetailList;
+    private ArrayList<FoodDetails> foodDetailsList = new ArrayList<>();
     private MyViewHolder myViewHolder;
+    public static final String TAG = CartAdapter.class.getSimpleName();
 
-    public CartAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
+    public CartAdapter(Context context, ArrayList<FoodDetails> foodDetailsList) {
         this.context = context;
-        this.foodDetailList = foodDetailList;
+        this.foodDetailsList = foodDetailsList;
     }
 
     @Override
@@ -38,7 +39,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(CartAdapter.MyViewHolder holder, int position) {
-        final FoodDetails foodDetails = foodDetailList.get(position);
+        final FoodDetails foodDetails = foodDetailsList.get(position);
+        holder.textViewItemName.setText(String.valueOf(foodDetails.getFoodName()));
         holder.textViewCost.setText(String.valueOf(foodDetails.getFoodPrice()));
         holder.textViewQty.setText(String.valueOf(foodDetails.getFoodQuantity()));
         holder.textViewTotalCost.setText(String.valueOf(foodDetails.getFoodQuantity() * foodDetails.getFoodPrice()));
@@ -46,16 +48,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return foodDetailList.size();
+        return foodDetailsList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView textViewItemName;
         TextView textViewCost;
         TextView textViewQty;
         TextView textViewTotalCost;
 
         public MyViewHolder(View view) {
             super(view);
+            textViewItemName = view.findViewById(R.id.tv_cart_item_name);
             textViewCost = view.findViewById(R.id.cart_tv_cost_amount);
             textViewQty = view.findViewById(R.id.cart_tv_qty);
             textViewTotalCost = view.findViewById(R.id.cart_tv_total_amount);

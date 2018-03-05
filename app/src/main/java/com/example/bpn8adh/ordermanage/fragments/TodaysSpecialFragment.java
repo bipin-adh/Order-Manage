@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +16,7 @@ import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.activities.CartActivity;
 import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
@@ -103,6 +102,8 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
         foodDetails3.setFoodQuantity(0);
         foodDetails3.setFoodImage("http://ninjacoffeebarrecipes.com/wp-content/uploads/2015/12/Cafe_Mocha.jpg");
         foodDetailList.add(foodDetails3);
+
+        AppSettings.getInstance().setCartDetailsLists(foodDetailList);
     }
 
     @Override

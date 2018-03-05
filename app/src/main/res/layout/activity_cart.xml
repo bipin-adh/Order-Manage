@@ -12,33 +12,30 @@
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/cart_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_toolbar_title"
-                    style="@style/TitleTextAppearance"
-                    android:layout_centerVertical="true"
-                    android:text="Welcome" />
-
-                <include
-                    android:id="@+id/dashboard_notification"
-                    layout="@layout/toolbar_notification_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_toolbar_title"
+                style="@style/TitleTextAppearance"
+                android:text="Cart List" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_cart" />
+
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/fab_add_to_cart"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:layout_margin="12dp"-->
+    <!--android:clickable="true"-->
+    <!--app:backgroundTint="@color/red"-->
+    <!--android:src="@drawable/ic_shopping_cart_white_24dp" />-->
 
 </android.support.design.widget.CoordinatorLayout>

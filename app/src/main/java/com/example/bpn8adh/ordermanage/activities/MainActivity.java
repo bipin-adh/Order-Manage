@@ -81,6 +81,5 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
-
     }
 }
