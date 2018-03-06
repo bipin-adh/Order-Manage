@@ -1,10 +1,16 @@
 package com.example.bpn8adh.ordermanage.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TabPagerAdapter;
@@ -12,47 +18,58 @@ import com.example.bpn8adh.ordermanage.fragments.MainCourseFragment;
 import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
+import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    TabLayout tabLayout;
+    @BindView(R.id.tabLayoutEvents)
+    TabLayout tabLayoutEvents;
+    @BindView(R.id.viewPagerMain)
     ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initTab();
     }
 
+    private void setTypeface(final int position, final int textStyle) {
+        final Thread t = new Thread() {
+            @Override
+            public void run() {
+                Handler refresh = new Handler(Looper.getMainLooper());
+                refresh.post(new Runnable() {
+                    public void run() {
+                        LinearLayout tabLayout = (LinearLayout) ((ViewGroup) tabLayoutEvents.getChildAt(0)).getChildAt(position);
+                        TextView tabTextView = (TextView) tabLayout.getChildAt(1);
+                        tabTextView.setTypeface(GeneralUtils.getTypeface(MainActivity.this), textStyle);
+                    }
+                });
+            }
+        };
+        t.start();
+    }
+
     private void initTab() {
-        viewPager = findViewById(R.id.viewPagerMain);
         setupViewPager(viewPager);
-        tabLayout = findViewById(R.id.tabLayoutEvents);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayoutEvents.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayoutEvents.setupWithViewPager(viewPager);
 
-//        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(android.R.drawable.btn_star));
-//        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_starters_new));
-//        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.ic_soup));
-//        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.ic_main_course));
-
-//        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
-//        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        setTypeface(0, Typeface.BOLD);
+        tabLayoutEvents.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-//                super.onTabSelected(tab);
-//                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
-//                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                setTypeface(tab.getPosition(), Typeface.BOLD);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-//                super.onTabSelected(tab);
-//                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.gray_color);
-//                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                setTypeface(tab.getPosition(), Typeface.NORMAL);
             }
 
             @Override
@@ -60,16 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        // custom tab view
-//        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab_view, null);
-//        tabOne.setText("Special Offers");
-//        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tabs, 0, 0);
-//        tabLayout.getTabAt(0).setCustomView(tabOne);
-//
-//        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab_view, null);
-//        tabTwo.setText("Veg");
-//        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tabs, 0, 0);
-//        tabLayout.getTabAt(1).setCustomView(tabTwo);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -80,6 +87,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
         adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(4);
     }
 }

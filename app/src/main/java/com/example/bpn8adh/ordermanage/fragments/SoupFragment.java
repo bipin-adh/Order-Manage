@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.SoupAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
@@ -21,11 +22,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class SoupFragment extends Fragment {
-    Context mContext;
+    private Context mContext;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SoupAdapter soupAdapter;
     private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private View view;
 
     public SoupFragment() {
         // Required empty public constructor
@@ -57,7 +59,8 @@ public class SoupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tabs, container, false);
+        view = inflater.inflate(R.layout.fragment_tabs, container, false);
+        return  view;
     }
 
     private void setItemDetails() {
@@ -84,6 +87,8 @@ public class SoupFragment extends Fragment {
         foodDetails2.setFoodQuantity(0);
         foodDetails2.setFoodImage("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/8/30/4/FNM_100110-NICA-012_s4x3.jpg.rend.hgtvcom.616.462.suffix/1379693798550.jpeg");
         foodDetailList.add(foodDetails2);
+
+        AppSettings.getInstance().setCartDetailsLists(foodDetailList);
 
     }
 }

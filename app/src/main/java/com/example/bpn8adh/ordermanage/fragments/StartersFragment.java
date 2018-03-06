@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.StartersAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
@@ -20,11 +21,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class StartersFragment extends Fragment {
-    Context mContext;
+    private Context mContext;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private StartersAdapter startersAdapter;
     private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private View view;
 
     public StartersFragment() {
         // Required empty public constructor
@@ -56,7 +58,9 @@ public class StartersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tabs, container, false);
+
+        view = inflater.inflate(R.layout.fragment_tabs, container, false);
+        return view;
     }
 
     private void setItemDetails() {
@@ -91,5 +95,7 @@ public class StartersFragment extends Fragment {
         foodDetails3.setFoodQuantity(0);
         foodDetails3.setFoodImage("https://media-cdn.tripadvisor.com/media/photo-s/06/84/09/c6/bhanchha.jpg");
         foodDetailList.add(foodDetails3);
+
+        AppSettings.getInstance().setCartDetailsLists(foodDetailList);
     }
 }

@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class TodaysSpecialFragment extends Fragment implements View.OnClickListener {
-    Context mContext;
+    private Context mContext;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
@@ -32,6 +32,7 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
     private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
 
     private Button addToCartBtn;
+    private View view;
 
     public TodaysSpecialFragment() {
         // Required empty public constructor
@@ -67,7 +68,8 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tabs, container, false);
+        view =  inflater.inflate(R.layout.fragment_tabs, container, false);
+        return view;
     }
 
     private void setItemDetails() {

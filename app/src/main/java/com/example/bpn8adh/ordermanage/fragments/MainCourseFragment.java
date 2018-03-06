@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.MainCourseAdapter;
+import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
@@ -21,11 +23,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class MainCourseFragment extends Fragment {
-    Context mContext;
+    private Context mContext;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MainCourseAdapter mainCourseAdapter;
     private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private View view;
 
     public MainCourseFragment() {
         // Required empty public constructor
@@ -51,13 +54,15 @@ public class MainCourseFragment extends Fragment {
         mainCourseAdapter = new MainCourseAdapter(mContext, foodDetailList);
         recyclerView.setAdapter(mainCourseAdapter);
         mainCourseAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tabs, container, false);
+        view = inflater.inflate(R.layout.fragment_tabs, container, false);
+        return view;
     }
 
     private void setItemDetails() {
@@ -85,5 +90,6 @@ public class MainCourseFragment extends Fragment {
         foodDetails2.setFoodImage("https://realfood.tesco.com/media/images/Chilli-bean-soup-with-cheesy-garlic-bread--HERO-a4c3e012-c012-4d6f-9aa0-e7c1916b6d7d-0-472x310.jpg");
         foodDetailList.add(foodDetails2);
 
+        AppSettings.getInstance().setCartDetailsLists(foodDetailList);
     }
 }
