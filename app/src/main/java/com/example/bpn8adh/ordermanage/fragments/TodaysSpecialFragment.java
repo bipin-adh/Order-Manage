@@ -1,6 +1,5 @@
 package com.example.bpn8adh.ordermanage.fragments;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,27 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
-import com.example.bpn8adh.ordermanage.activities.CartActivity;
 import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodaysSpecialFragment extends Fragment implements View.OnClickListener {
+public class TodaysSpecialFragment extends Fragment {
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.add_to_cart)
+    Button addToCartBtn;
+
     private Context mContext;
-    private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-
     private TodaysSpecialAdapter todaysSpecialAdapter;
-    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private ArrayList<FoodDetails> todaysSpecialDetailList = new ArrayList<>();
 
-    private Button addToCartBtn;
     private View view;
+    private ArrayList<FoodDetails> cartDetailList = new ArrayList<>();
 
     public TodaysSpecialFragment() {
         // Required empty public constructor
@@ -48,28 +54,34 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (foodDetailList.size() != 0) {
-            foodDetailList.clear();
+        if (todaysSpecialDetailList.size() != 0) {
+            todaysSpecialDetailList.clear();
         }
         setItemDetails();
-        recyclerView = view.findViewById(R.id.recyclerView);
-        addToCartBtn = view.findViewById(R.id.add_to_cart);
-
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
-        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, foodDetailList);
+        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, todaysSpecialDetailList);
         recyclerView.setAdapter(todaysSpecialAdapter);
         todaysSpecialAdapter.notifyDataSetChanged();
-
-        addToCartBtn.setOnClickListener(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_tabs, container, false);
+        view = inflater.inflate(R.layout.fragment_tabs, container, false);
+        ButterKnife.bind(this, view);
         return view;
+    }
+
+    @OnClick({R.id.add_to_cart})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_to_cart:
+                OrderManageApplication.getSettings().setCartListInPref(cartDetailList);
+                OrderManageApplication.getInstance().showToast("Order Placed in Cart !!!");
+                break;
+        }
     }
 
     private void setItemDetails() {
@@ -79,7 +91,7 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
         foodDetails.setFoodPrice(400);
         foodDetails.setFoodQuantity(0);
         foodDetails.setFoodImage("https://static.wixstatic.com/media/871a43_855845212afb4815a2e607fd9c4a9b76~mv2.jpg");
-        foodDetailList.add(foodDetails);
+        todaysSpecialDetailList.add(foodDetails);
 
         FoodDetails foodDetails1 = new FoodDetails();
         foodDetails1.setFoodName("Masala Tea");
@@ -87,7 +99,7 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
         foodDetails1.setFoodPrice(70);
         foodDetails1.setFoodQuantity(0);
         foodDetails1.setFoodImage("https://assets.epicurious.com/photos/579909083a12dd9d56024018/master/pass/spiced-milk-tea-masala-chai.jpg");
-        foodDetailList.add(foodDetails1);
+        todaysSpecialDetailList.add(foodDetails1);
 
         FoodDetails foodDetails2 = new FoodDetails();
         foodDetails2.setFoodName("Chicken Curry");
@@ -95,7 +107,7 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
         foodDetails2.setFoodPrice(290);
         foodDetails2.setFoodQuantity(0);
         foodDetails2.setFoodImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZc8SEDp09gwbPaCebWEazNwlRgr860wp2oCwZR4mhCKc42hPjEw");
-        foodDetailList.add(foodDetails2);
+        todaysSpecialDetailList.add(foodDetails2);
 
         FoodDetails foodDetails3 = new FoodDetails();
         foodDetails3.setFoodName("Coffee");
@@ -103,18 +115,16 @@ public class TodaysSpecialFragment extends Fragment implements View.OnClickListe
         foodDetails3.setFoodPrice(200);
         foodDetails3.setFoodQuantity(0);
         foodDetails3.setFoodImage("http://ninjacoffeebarrecipes.com/wp-content/uploads/2015/12/Cafe_Mocha.jpg");
-        foodDetailList.add(foodDetails3);
+        todaysSpecialDetailList.add(foodDetails3);
 
-        AppSettings.getInstance().setCartDetailsLists(foodDetailList);
-    }
-
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.add_to_cart:
-                CartActivity.launchActivity(getActivity());
-                break;
+        if (cartDetailList.size() != 0) {
+            cartDetailList.clear();
         }
+        cartDetailList.addAll(todaysSpecialDetailList);
+        if (AppSettings.getInstance().getCartDetailsLists() != null &&
+                !AppSettings.getInstance().getCartDetailsLists().isEmpty()) {
+            cartDetailList.addAll(AppSettings.getInstance().getCartDetailsLists());
+        }
+        AppSettings.getInstance().setCartDetailsLists(cartDetailList);
     }
 }

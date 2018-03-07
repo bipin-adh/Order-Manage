@@ -45,7 +45,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
 
         View itemView;
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list, parent, false);
+                .inflate(R.layout.list_item_fragment, parent, false);
 
         myViewHolder = new MyViewHolder(itemView);
         return myViewHolder;

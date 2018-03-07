@@ -11,6 +11,7 @@ import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bpn8adh on 02/03/18.
@@ -18,11 +19,11 @@ import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     private final Context context;
-    private ArrayList<FoodDetails> foodDetailsList = new ArrayList<>();
+    private List<FoodDetails> foodDetailsList = new ArrayList<>();
     private MyViewHolder myViewHolder;
     public static final String TAG = CartAdapter.class.getSimpleName();
 
-    public CartAdapter(Context context, ArrayList<FoodDetails> foodDetailsList) {
+    public CartAdapter(Context context, List<FoodDetails> foodDetailsList) {
         this.context = context;
         this.foodDetailsList = foodDetailsList;
     }
@@ -31,7 +32,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public CartAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cart_list, parent, false);
+                .inflate(R.layout.list_cart, parent, false);
 
         myViewHolder = new CartAdapter.MyViewHolder(itemView);
         return myViewHolder;

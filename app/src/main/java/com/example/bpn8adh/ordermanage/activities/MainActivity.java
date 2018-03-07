@@ -7,28 +7,43 @@ import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TabPagerAdapter;
 import com.example.bpn8adh.ordermanage.fragments.MainCourseFragment;
 import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
+import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.tabLayoutEvents)
     TabLayout tabLayoutEvents;
     @BindView(R.id.viewPagerMain)
     ViewPager viewPager;
+    @BindView(R.id.tv_cart_notify)
+    TextView textViewCartListItemNum;
+
+    private int numOfItemsInCart;
+    private List<FoodDetails> savedCartListToOrder = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initTab();
+    }
+
+    @OnClick({R.id.cart_toolbar_notification})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.cart_toolbar_notification:
+                CartActivity.launchActivity(MainActivity.this);
+                break;
+        }
     }
 
     private void setTypeface(final int position, final int textStyle) {

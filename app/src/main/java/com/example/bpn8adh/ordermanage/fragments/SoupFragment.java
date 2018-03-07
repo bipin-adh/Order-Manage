@@ -7,27 +7,40 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
+import com.example.bpn8adh.ordermanage.activities.CartActivity;
 import com.example.bpn8adh.ordermanage.adapters.SoupAdapter;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SoupFragment extends Fragment {
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.add_to_cart)
+    Button addToCartBtn;
+
     private Context mContext;
-    private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SoupAdapter soupAdapter;
-    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private ArrayList<FoodDetails> soupDetailList = new ArrayList<>();
     private View view;
+    private ArrayList<FoodDetails> cartDetailList = new ArrayList<>();
 
     public SoupFragment() {
         // Required empty public constructor
@@ -43,14 +56,13 @@ public class SoupFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (foodDetailList.size() != 0) {
-            foodDetailList.clear();
+        if (soupDetailList.size() != 0) {
+            soupDetailList.clear();
         }
         setItemDetails();
-        recyclerView = view.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
-        soupAdapter = new SoupAdapter(mContext, foodDetailList);
+        soupAdapter = new SoupAdapter(mContext, soupDetailList);
         recyclerView.setAdapter(soupAdapter);
         soupAdapter.notifyDataSetChanged();
     }
@@ -60,7 +72,17 @@ public class SoupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tabs, container, false);
-        return  view;
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @OnClick({R.id.add_to_cart})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_to_cart:
+                OrderManageApplication.getInstance().showToast("Order placed succesfully");
+                break;
+        }
     }
 
     private void setItemDetails() {
@@ -70,7 +92,7 @@ public class SoupFragment extends Fragment {
         foodDetails.setFoodPrice(120);
         foodDetails.setFoodQuantity(0);
         foodDetails.setFoodImage("https://www.wholefoodsmarket.com/sites/default/files/styles/header_recipe/public/media/3438-1.jpg?itok=WicsKlIK");
-        foodDetailList.add(foodDetails);
+        soupDetailList.add(foodDetails);
 
         FoodDetails foodDetails1 = new FoodDetails();
         foodDetails1.setFoodName("Roast Pumpkin Soup");
@@ -78,7 +100,7 @@ public class SoupFragment extends Fragment {
         foodDetails1.setFoodPrice(250);
         foodDetails1.setFoodQuantity(0);
         foodDetails1.setFoodImage("http://img.taste.com.au/g_FqQjcv/taste/2016/11/roasted-pumpkin-soup-93906-1.jpeg");
-        foodDetailList.add(foodDetails1);
+        soupDetailList.add(foodDetails1);
 
         FoodDetails foodDetails2 = new FoodDetails();
         foodDetails2.setFoodName("Charred Eggplant Soup");
@@ -86,9 +108,17 @@ public class SoupFragment extends Fragment {
         foodDetails2.setFoodPrice(590);
         foodDetails2.setFoodQuantity(0);
         foodDetails2.setFoodImage("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/8/30/4/FNM_100110-NICA-012_s4x3.jpg.rend.hgtvcom.616.462.suffix/1379693798550.jpeg");
-        foodDetailList.add(foodDetails2);
+        soupDetailList.add(foodDetails2);
 
-        AppSettings.getInstance().setCartDetailsLists(foodDetailList);
+        if (cartDetailList.size() != 0) {
+            cartDetailList.clear();
+        }
+        cartDetailList.addAll(soupDetailList);
+        if (AppSettings.getInstance().getCartDetailsLists() != null &&
+                !AppSettings.getInstance().getCartDetailsLists().isEmpty()) {
+            cartDetailList.addAll(AppSettings.getInstance().getCartDetailsLists());
+        }
+        AppSettings.getInstance().setCartDetailsLists(cartDetailList);
 
     }
 }

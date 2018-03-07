@@ -45,7 +45,7 @@ public class MainCourseAdapter extends RecyclerView.Adapter<MainCourseAdapter.My
 
         View itemView;
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list, parent, false);
+                .inflate(R.layout.list_item_fragment, parent, false);
 
         myViewHolder = new MainCourseAdapter.MyViewHolder(itemView);
         return myViewHolder;

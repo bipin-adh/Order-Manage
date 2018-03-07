@@ -45,7 +45,7 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
 
         View itemView;
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list, parent, false);
+                .inflate(R.layout.list_item_fragment, parent, false);
 
         myViewHolder = new SoupAdapter.MyViewHolder(itemView);
         return myViewHolder;

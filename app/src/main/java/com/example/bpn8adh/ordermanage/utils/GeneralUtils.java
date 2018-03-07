@@ -14,4 +14,5 @@ public class GeneralUtils {
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), FONTPATH);
         return typeface;
     }
+
 }
