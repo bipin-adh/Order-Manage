@@ -29,8 +29,8 @@ import butterknife.OnClick;
 public class StartersFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.add_to_cart)
-    Button addToCartBtn;
+//    @BindView(R.id.add_to_cart)
+//    Button addToCartBtn;
 
     private Context mContext;
     private LinearLayoutManager linearLayoutManager;
@@ -74,13 +74,13 @@ public class StartersFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.add_to_cart})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_to_cart:
-                break;
-        }
-    }
+//    @OnClick({R.id.add_to_cart})
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.add_to_cart:
+//                break;
+//        }
+//    }
 
     private void setItemDetails() {
         FoodDetails foodDetails = new FoodDetails();

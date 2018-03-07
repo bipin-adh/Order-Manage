@@ -32,8 +32,8 @@ import butterknife.OnClick;
 public class MainCourseFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.add_to_cart)
-    Button addToCartBtn;
+//    @BindView(R.id.add_to_cart)
+//    Button addToCartBtn;
 
     public static final String TAG = MainCourseFragment.class.getSimpleName();
     private Context mContext;
@@ -77,14 +77,14 @@ public class MainCourseFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.add_to_cart})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_to_cart:
-                OrderManageApplication.getInstance().showToast("Order placed successfully");
-                break;
-        }
-    }
+//    @OnClick({R.id.add_to_cart})
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.add_to_cart:
+//                OrderManageApplication.getInstance().showToast("Order placed successfully");
+//                break;
+//        }
+//    }
 
     private void setItemDetails() {
         FoodDetails foodDetails = new FoodDetails();

@@ -4,37 +4,35 @@
     android:layout_height="match_parent"
     tools:context="com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--&gt;-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="5"
-        >
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:clipToPadding="false" />
-        <Button
-            android:id="@+id/add_to_cart"
-            android:layout_width="match_parent"
-            android:padding="12dp"
-            android:layout_gravity="center"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_corner_btn"
-            android:gravity="center"
-            android:text="Add to cart"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
+        android:clipToPadding="false" />
+    <!--<Button-->
+    <!--android:id="@+id/add_to_cart"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:padding="12dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/rounded_corner_btn"-->
+    <!--android:gravity="center"-->
+    <!--android:text="Add to cart"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textColor="@color/white" />-->
 
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </FrameLayout>
