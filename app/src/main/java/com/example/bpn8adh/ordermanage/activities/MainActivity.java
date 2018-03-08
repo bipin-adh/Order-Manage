@@ -7,31 +7,26 @@ import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TabPagerAdapter;
 import com.example.bpn8adh.ordermanage.fragments.MainCourseFragment;
 import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
-import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CartToolbarCountListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -42,21 +37,24 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_cart_notify)
     TextView textViewCartListItemNum;
 
-    private int numOfItemsInCart;
-    private List<FoodDetails> savedCartListToOrder = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initTab();
+        if (AppSettings.getInstance().getCartToolbarCountFromPref() == 0) {
+            textViewCartListItemNum.setVisibility(View.GONE);
+        } else {
+            textViewCartListItemNum.setText("" + AppSettings.getInstance().getCartToolbarCountFromPref());
+        }
     }
 
     @OnClick({R.id.cart_toolbar_notification})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cart_toolbar_notification:
+                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
                 CartActivity.launchActivity(MainActivity.this);
                 break;
         }
@@ -112,5 +110,16 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
+    }
+
+    @Override
+    public void updateCartToolbarCount() {
+        if (AppSettings.getInstance().getCartToolbarCountFromPref() == 0) {
+            textViewCartListItemNum.setVisibility(View.GONE);
+        } else {
+            textViewCartListItemNum.setVisibility(View.VISIBLE);
+            int totalCount = AppSettings.getInstance().getCartToolbarCountFromPref();
+            textViewCartListItemNum.setText("" + totalCount);
+        }
     }
 }

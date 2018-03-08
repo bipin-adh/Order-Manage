@@ -54,16 +54,19 @@ public class TodaysSpecialFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (todaysSpecialDetailList.size() != 0) {
-            todaysSpecialDetailList.clear();
-        }
+//        if (todaysSpecialDetailList.size() == 0) {
+//            todaysSpecialDetailList.clear();
+//        }
+
         setItemDetails();
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
-        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, todaysSpecialDetailList);
+        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, cartDetailList);
+//        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, todaysSpecialDetailList);
         recyclerView.setAdapter(todaysSpecialAdapter);
         todaysSpecialAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,57 +77,51 @@ public class TodaysSpecialFragment extends Fragment {
         return view;
     }
 
-//    @OnClick({R.id.add_to_cart})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.add_to_cart:
-//                OrderManageApplication.getSettings().setCartListInPref(cartDetailList);
-//                OrderManageApplication.getInstance().showToast("Order Placed in Cart !!!");
-//                break;
-//        }
-//    }
-
     private void setItemDetails() {
-        FoodDetails foodDetails = new FoodDetails();
-        foodDetails.setFoodName("Hyderabad Biryani");
-        foodDetails.setFoodPreparationTime("20 mins");
-        foodDetails.setFoodPrice(400);
-        foodDetails.setFoodQuantity(0);
-        foodDetails.setFoodImage("https://static.wixstatic.com/media/871a43_855845212afb4815a2e607fd9c4a9b76~mv2.jpg");
-        todaysSpecialDetailList.add(foodDetails);
+        if (AppSettings.getInstance().getCartListFromPref() != null && !AppSettings.getInstance().getCartListFromPref().isEmpty()) {
+            cartDetailList.addAll(AppSettings.getInstance().getCartListFromPref());
+        } else {
+            FoodDetails foodDetails = new FoodDetails();
+            foodDetails.setFoodName("Hyderabad Biryani");
+            foodDetails.setFoodPreparationTime("20 mins");
+            foodDetails.setFoodPrice(400);
+            foodDetails.setFoodQuantity(0);
+            foodDetails.setFoodImage("https://static.wixstatic.com/media/871a43_855845212afb4815a2e607fd9c4a9b76~mv2.jpg");
+            todaysSpecialDetailList.add(foodDetails);
 
-        FoodDetails foodDetails1 = new FoodDetails();
-        foodDetails1.setFoodName("Masala Tea");
-        foodDetails1.setFoodPreparationTime("10 mins");
-        foodDetails1.setFoodPrice(70);
-        foodDetails1.setFoodQuantity(0);
-        foodDetails1.setFoodImage("https://assets.epicurious.com/photos/579909083a12dd9d56024018/master/pass/spiced-milk-tea-masala-chai.jpg");
-        todaysSpecialDetailList.add(foodDetails1);
+            FoodDetails foodDetails1 = new FoodDetails();
+            foodDetails1.setFoodName("Masala Tea");
+            foodDetails1.setFoodPreparationTime("10 mins");
+            foodDetails1.setFoodPrice(70);
+            foodDetails1.setFoodQuantity(0);
+            foodDetails1.setFoodImage("https://assets.epicurious.com/photos/579909083a12dd9d56024018/master/pass/spiced-milk-tea-masala-chai.jpg");
+            todaysSpecialDetailList.add(foodDetails1);
 
-        FoodDetails foodDetails2 = new FoodDetails();
-        foodDetails2.setFoodName("Chicken Curry");
-        foodDetails2.setFoodPreparationTime("25 mins");
-        foodDetails2.setFoodPrice(290);
-        foodDetails2.setFoodQuantity(0);
-        foodDetails2.setFoodImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZc8SEDp09gwbPaCebWEazNwlRgr860wp2oCwZR4mhCKc42hPjEw");
-        todaysSpecialDetailList.add(foodDetails2);
+            FoodDetails foodDetails2 = new FoodDetails();
+            foodDetails2.setFoodName("Chicken Curry");
+            foodDetails2.setFoodPreparationTime("25 mins");
+            foodDetails2.setFoodPrice(290);
+            foodDetails2.setFoodQuantity(0);
+            foodDetails2.setFoodImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZc8SEDp09gwbPaCebWEazNwlRgr860wp2oCwZR4mhCKc42hPjEw");
+            todaysSpecialDetailList.add(foodDetails2);
 
-        FoodDetails foodDetails3 = new FoodDetails();
-        foodDetails3.setFoodName("Coffee");
-        foodDetails3.setFoodPreparationTime("10 mins");
-        foodDetails3.setFoodPrice(200);
-        foodDetails3.setFoodQuantity(0);
-        foodDetails3.setFoodImage("http://ninjacoffeebarrecipes.com/wp-content/uploads/2015/12/Cafe_Mocha.jpg");
-        todaysSpecialDetailList.add(foodDetails3);
+            FoodDetails foodDetails3 = new FoodDetails();
+            foodDetails3.setFoodName("Coffee");
+            foodDetails3.setFoodPreparationTime("10 mins");
+            foodDetails3.setFoodPrice(200);
+            foodDetails3.setFoodQuantity(0);
+            foodDetails3.setFoodImage("http://ninjacoffeebarrecipes.com/wp-content/uploads/2015/12/Cafe_Mocha.jpg");
+            todaysSpecialDetailList.add(foodDetails3);
 
-        if (cartDetailList.size() != 0) {
-            cartDetailList.clear();
+            cartDetailList.addAll(todaysSpecialDetailList);
         }
-        cartDetailList.addAll(todaysSpecialDetailList);
-        if (AppSettings.getInstance().getCartDetailsLists() != null &&
-                !AppSettings.getInstance().getCartDetailsLists().isEmpty()) {
-            cartDetailList.addAll(AppSettings.getInstance().getCartDetailsLists());
-        }
+//        if (cartDetailList.size() != 0) {
+//            cartDetailList.clear();
+//        }
+//        if (AppSettings.getInstance().getCartDetailsLists() != null &&
+//                !AppSettings.getInstance().getCartDetailsLists().isEmpty()) {
+//            cartDetailList.addAll(AppSettings.getInstance().getCartDetailsLists());
+//        }
         AppSettings.getInstance().setCartDetailsLists(cartDetailList);
     }
 }

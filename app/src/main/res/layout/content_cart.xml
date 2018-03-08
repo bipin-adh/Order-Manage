@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="12dp"
                 android:layout_weight="1"
-                android:text="Total Price(Rs)"
+                android:text="Total Price (Rs)"
                 android:textColor="@color/white" />
 
             <ImageView
@@ -74,7 +74,7 @@
         android:layout_weight="1"
         android:background="@drawable/rounded_corner_btn"
         android:gravity="center"
-        android:text="Order"
+        android:text="Place Order"
         android:textAlignment="center"
         android:textColor="@color/white" />
 

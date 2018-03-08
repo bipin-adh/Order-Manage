@@ -16,14 +16,17 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by bpn8adh on 03/03/18.
+ * Created by Bipin Adhikari on 03/03/18.
  */
 
 public class AppSettings {
 
     public static final String TAG = AppSettings.class.getSimpleName();
-    private static final String SP_NAME = "OrderManage";
-    private static final String SP_CART_LIST = "CartList";
+    private static final String SP_NAME = "orderManage";
+    private static final String SP_CART_LIST = "cartList";
+    private static final String SP_CART_NOTIFICATION_COUNT = "cartNotificationCount";
+    private static final String SP_FOOD_DETAILS = "foodDetails";
+
     private static AppSettings appSettings;
     private static Context context;
     private List<FoodDetails> cartDetailsList;
@@ -39,6 +42,18 @@ public class AppSettings {
         return appSettings;
     }
 
+    public List<FoodDetails> getCartDetailsLists() {
+        return cartDetailsList;
+    }
+
+    public void setCartDetailsLists(List<FoodDetails> cartDetailsLists) {
+        this.cartDetailsList = cartDetailsLists;
+    }
+
+    public void clearSharedPrefData() {
+        getSharedPreference().edit().remove(SP_CART_LIST).apply();
+    }
+
     public SharedPreferences getSharedPreference() {
         if (sharedPreference == null) {
             synchronized (AppSettings.class) {
@@ -50,14 +65,6 @@ public class AppSettings {
 
     public SharedPreferences.Editor getSharedPreferenceEditor() {
         return getSharedPreference().edit();
-    }
-
-    public List<FoodDetails> getCartDetailsLists() {
-        return cartDetailsList;
-    }
-
-    public void setCartDetailsLists(List<FoodDetails> cartDetailsLists) {
-        this.cartDetailsList = cartDetailsLists;
     }
 
     public void setCartListInPref(List<FoodDetails> notificationDetailsList) {
@@ -77,4 +84,20 @@ public class AppSettings {
         }
         return objects;
     }
+
+    public int getCartToolbarCountFromPref() {
+        return (getSharedPreference().getInt(SP_CART_NOTIFICATION_COUNT, 0));
+    }
+
+    public void setCartToolbarCountInPref(int cartToolbarCount) {
+        getSharedPreferenceEditor().putInt(SP_CART_NOTIFICATION_COUNT, cartToolbarCount).commit();
+    }
+    public void setFoodDetails(boolean isDataSet) {
+        getSharedPreferenceEditor().putBoolean(SP_FOOD_DETAILS, isDataSet);
+    }
+
+    public boolean isDataSet() {
+        return getSharedPreference().getBoolean(SP_FOOD_DETAILS, false);
+    }
+
 }

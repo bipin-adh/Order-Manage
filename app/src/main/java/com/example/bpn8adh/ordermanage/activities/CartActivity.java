@@ -64,9 +64,11 @@ public class CartActivity extends AppCompatActivity {
 
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        if (OrderManageApplication.getSettings().getCartDetailsLists() != null
-                && !OrderManageApplication.getSettings().getCartDetailsLists().isEmpty()) {
-            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getCartDetailsLists()) {
+
+        cartDetailsList.clear();
+//        cartDetailsList = OrderManageApplication.getSettings().getCartListFromPref();
+        if (OrderManageApplication.getSettings().getCartListFromPref() != null && !OrderManageApplication.getSettings().getCartListFromPref().isEmpty()) {
+            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getCartListFromPref()) {
                 if (cartDetails.getFoodQuantity() != 0) {
                     cartDetailsList.add(cartDetails);
                     totalPrice = totalPrice + cartDetails.getFoodPrice() * cartDetails.getFoodQuantity();
@@ -84,8 +86,10 @@ public class CartActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_cart_order:
-                OrderManageApplication.getInstance().showToast(MSG_ORDER_SUCCESS);
                 cartDetailsList.clear();
+                AppSettings.getInstance().setCartToolbarCountInPref(0);
+                AppSettings.getInstance().setCartListInPref(cartDetailsList);
+                OrderManageApplication.getInstance().showToast(MSG_ORDER_SUCCESS);
                 cartAdapter.notifyDataSetChanged();
                 finish();
                 Intent launchHomeIntent = new Intent(CartActivity.this, MainActivity.class);

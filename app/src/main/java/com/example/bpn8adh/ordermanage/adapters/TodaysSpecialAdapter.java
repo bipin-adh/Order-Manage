@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.bpn8adh.ordermanage.R;
+import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
 
@@ -36,9 +38,12 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
     private String foodPrepTime;
     private String foodImage;
 
+    private CartToolbarCountListener cartToolbarCountListener;
+
     public TodaysSpecialAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
         this.context = context;
         this.foodDetailList = foodDetailList;
+        this.cartToolbarCountListener = (CartToolbarCountListener) context;
     }
 
     @Override
@@ -91,6 +96,8 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                 foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
+                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + 1);
+                cartToolbarCountListener.updateCartToolbarCount();
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +107,8 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
+                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
+                    cartToolbarCountListener.updateCartToolbarCount();
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
