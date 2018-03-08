@@ -97,8 +97,8 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                 foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
-                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + 1);
-                cartToolbarCountListener.updateCartToolbarCount();
+//                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + 1);
+//                cartToolbarCountListener.updateCartToolbarCount();
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +108,8 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
-                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
-                    cartToolbarCountListener.updateCartToolbarCount();
+//                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
+//                    cartToolbarCountListener.updateCartToolbarCount();
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
@@ -119,6 +119,14 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 }
             }
         });
+//        holder.textViewAddToCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + foodDetails.getFoodQuantity());
+//                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
+//                cartToolbarCountListener.updateCartToolbarCount();
+//            }
+//        });
     }
 
     @Override
@@ -131,6 +139,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
         TextView textViewPrepTime;
         TextView textViewQuantityTotal;
         TextView textViewPrice;
+        TextView textViewAddToCart;
 
         ProgressBar progressBar;
         ImageView imageViewItem;
@@ -148,6 +157,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
             imageViewQuantityIncrease = view.findViewById(R.id.iv_quantity_increase);
             imageViewQuantityDecrease = view.findViewById(R.id.iv_quantity_decrease);
             textViewQuantityTotal = view.findViewById(R.id.tv_item_quantity);
+//            textViewAddToCart = view.findViewById(R.id.tv_add_to_cart);
         }
     }
 }

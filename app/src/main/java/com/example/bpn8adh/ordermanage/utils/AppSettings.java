@@ -31,6 +31,7 @@ public class AppSettings {
     private static Context context;
     private List<FoodDetails> cartDetailsList;
     private SharedPreferences sharedPreference;
+    private boolean isEditCart;
 
     public static AppSettings getInstance() {
         if (appSettings == null) {
@@ -92,6 +93,7 @@ public class AppSettings {
     public void setCartToolbarCountInPref(int cartToolbarCount) {
         getSharedPreferenceEditor().putInt(SP_CART_NOTIFICATION_COUNT, cartToolbarCount).commit();
     }
+
     public void setFoodDetails(boolean isDataSet) {
         getSharedPreferenceEditor().putBoolean(SP_FOOD_DETAILS, isDataSet);
     }
@@ -100,4 +102,11 @@ public class AppSettings {
         return getSharedPreference().getBoolean(SP_FOOD_DETAILS, false);
     }
 
+    public boolean isEditCart() {
+        return isEditCart;
+    }
+
+    public void setEditCartState(boolean isEditCart) {
+        this.isEditCart = isEditCart;
+    }
 }

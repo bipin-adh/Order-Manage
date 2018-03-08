@@ -1,5 +1,7 @@
 package com.example.bpn8adh.ordermanage.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TabPagerAdapter;
 import com.example.bpn8adh.ordermanage.fragments.MainCourseFragment;
@@ -19,6 +22,7 @@ import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
 import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
+import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
@@ -29,6 +33,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements CartToolbarCountListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    private static final String MSG_NO_ITEMS_IN_CART = "No items added to cart";
 
     @BindView(R.id.tabLayoutEvents)
     TabLayout tabLayoutEvents;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     ViewPager viewPager;
     @BindView(R.id.tv_cart_notify)
     TextView textViewCartListItemNum;
+    private int totalCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +49,28 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initTab();
-        if (AppSettings.getInstance().getCartToolbarCountFromPref() == 0) {
+        totalCount = GeneralUtils.getTotalCount();
+        if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
         } else {
-            textViewCartListItemNum.setText("" + AppSettings.getInstance().getCartToolbarCountFromPref());
+            textViewCartListItemNum.setText("" + totalCount);
         }
+    }
+    public static void launchActivity(Activity activity) {
+        Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
     }
 
     @OnClick({R.id.cart_toolbar_notification})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cart_toolbar_notification:
-                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                CartActivity.launchActivity(MainActivity.this);
+//                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
+                if (GeneralUtils.getTotalCount() == 0) {
+                    OrderManageApplication.getInstance().showToast(MSG_NO_ITEMS_IN_CART);
+                } else {
+                    CartActivity.launchActivity(MainActivity.this);
+                }
                 break;
         }
     }
@@ -114,12 +129,11 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
 
     @Override
     public void updateCartToolbarCount() {
-        if (AppSettings.getInstance().getCartToolbarCountFromPref() == 0) {
+        if (GeneralUtils.getTotalCount() == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
         } else {
             textViewCartListItemNum.setVisibility(View.VISIBLE);
-            int totalCount = AppSettings.getInstance().getCartToolbarCountFromPref();
-            textViewCartListItemNum.setText("" + totalCount);
+            textViewCartListItemNum.setText("" + GeneralUtils.getTotalCount());
         }
     }
 }

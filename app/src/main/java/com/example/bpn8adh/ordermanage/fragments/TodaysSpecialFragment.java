@@ -10,25 +10,33 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
+import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
+import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TodaysSpecialFragment extends Fragment {
+    private static final String MSG_ADD_TO_CART_SUCCESS = "Items added to cart succesfully";
+    private static final String MSG_ADD_TO_CART_FAIL = "Please select item to add";
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-//    @BindView(R.id.add_to_cart)
-//    Button addToCartBtn;
+    @BindView(R.id.add_to_cart)
+    TextView addToCartBtn;
 
     private Context mContext;
     private LinearLayoutManager linearLayoutManager;
@@ -39,6 +47,7 @@ public class TodaysSpecialFragment extends Fragment {
     private View view;
     private ArrayList<FoodDetails> oldCartDetailList = new ArrayList<>();
     private ArrayList<FoodDetails> cartDetailList = new ArrayList<>();
+    private CartToolbarCountListener cartToolbarCountListener;
 
     public TodaysSpecialFragment() {
         // Required empty public constructor
@@ -61,6 +70,13 @@ public class TodaysSpecialFragment extends Fragment {
         setItemDetails();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (AppSettings.getInstance().isEditCart()) {
+            addToCartBtn.setText("Update Cart");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +86,24 @@ public class TodaysSpecialFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
+
+    @OnClick({R.id.add_to_cart})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_to_cart:
+                this.cartToolbarCountListener = (CartToolbarCountListener) mContext;
+                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
+                if (GeneralUtils.getTotalCount() != 0) {
+                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_SUCCESS);
+                } else {
+                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_FAIL);
+                }
+                cartToolbarCountListener.updateCartToolbarCount();
+
+                break;
+        }
+    }
+
 
     private void setItemDetails() {
 
