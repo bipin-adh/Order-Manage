@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,12 +62,12 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
     public void onBindViewHolder(final TodaysSpecialAdapter.MyViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
         holder.textViewQuantityTotal.setText("" + DEFAULT_ITEM_QUANTITY_VALUE);
-
         final FoodDetails foodDetails = foodDetailList.get(position);
         foodName = foodDetails.getFoodName();
         foodPrice = foodDetails.getFoodPrice();
         foodImage = foodDetails.getFoodImage();
         foodPrepTime = foodDetails.getFoodPreparationTime();
+        holder.textViewQuantityTotal.setText(""+foodDetails.getFoodQuantity());
 
         Glide.with(context)
                 .load(foodImage)
