@@ -22,8 +22,7 @@ import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
 import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
-import com.example.bpn8adh.ordermanage.models.FoodDetails;
-import com.example.bpn8adh.ordermanage.utils.AppSettings;
+import com.example.bpn8adh.ordermanage.utils.DialogUtils;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
 import butterknife.BindView;
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
             textViewCartListItemNum.setText("" + totalCount);
         }
     }
+
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
         activity.startActivity(intent);
@@ -135,5 +135,10 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
             textViewCartListItemNum.setVisibility(View.VISIBLE);
             textViewCartListItemNum.setText("" + GeneralUtils.getTotalCount());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogUtils.exitDialog(this);
     }
 }
