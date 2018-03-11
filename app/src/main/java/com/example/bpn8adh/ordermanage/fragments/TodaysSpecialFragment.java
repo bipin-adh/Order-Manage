@@ -6,11 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.bpn8adh.ordermanage.OrderManageApplication;
@@ -39,14 +37,13 @@ public class TodaysSpecialFragment extends Fragment {
     TextView addToCartBtn;
 
     private Context mContext;
+    private View view;
     private LinearLayoutManager linearLayoutManager;
     private TodaysSpecialAdapter todaysSpecialAdapter;
-    private ArrayList<FoodDetails> todaysSpecialDetailList = new ArrayList<>();
-    private ArrayList<FoodDetails> updateTodaysSpecialDetailList = new ArrayList<>();
 
-    private View view;
+    private ArrayList<FoodDetails> todaysSpecialDetailList = new ArrayList<>();
     private ArrayList<FoodDetails> oldCartDetailList = new ArrayList<>();
-    private ArrayList<FoodDetails> cartDetailList = new ArrayList<>();
+
     private CartToolbarCountListener cartToolbarCountListener;
 
     public TodaysSpecialFragment() {
@@ -62,11 +59,6 @@ public class TodaysSpecialFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        if (todaysSpecialDetailList.size() == 0) {
-//            todaysSpecialDetailList.clear();
-//        }
-
         setItemDetails();
     }
 
@@ -144,41 +136,10 @@ public class TodaysSpecialFragment extends Fragment {
         for (FoodDetails newFoodDetail : todaysSpecialDetailList) {
             for (FoodDetails preFoodDetail : oldCartDetailList) {
                 if (preFoodDetail.getFoodName().equals(newFoodDetail.getFoodName())) {
-//                    todaysSpecialDetailList.remove(newFoodDetail);
-                    Log.d("aaaa", "setItemDetails: " + preFoodDetail.getFoodQuantity());
-//                    todaysSpecialDetailList.add(preFoodDetail);
                     newFoodDetail.setFoodQuantity(preFoodDetail.getFoodQuantity());
-                    Log.d("aaaa", "getFoodQuantity: " + newFoodDetail.getFoodQuantity());
-//                    cartDetailList.add(newFoodDetail);
                 }
             }
         }
-
-
-//        for (FoodDetails newFoodDetail : todaysSpecialDetailList) {
-//            for (FoodDetails prefFoodDetail : oldCartDetailList) {
-//                if (newFoodDetail.getFoodName().equals(prefFoodDetail)) {
-//                    newFoodDetail.setFoodQuantity(prefFoodDetail.getFoodQuantity());
-//                    cartDetailList.add(newFoodDetail);
-//                }
-//            }
-//        }
-
-//        oldCartDetailList.addAll(todaysSpecialDetailList);
-//
-//        Set<FoodDetails> hs = new HashSet<>();
-//        hs.addAll(oldCartDetailList);
-//        oldCartDetailList.clear();
-//        oldCartDetailList.addAll(hs);
-
-//            oldCartDetailList.addAll(todaysSpecialDetailList);
-
-//        if (oldCartDetailList.size() != 0) {
-//            oldCartDetailList.clear();
-//        }
-//        if (AppSettings.getInstance().getCartDetailsLists() != null &&
-//                !AppSettings.getInstance().getCartDetailsLists().isEmpty()) {
-//            oldCartDetailList.addAll(AppSettings.getInstance().getCartDetailsLists());
 
         AppSettings.getInstance().setCartDetailsLists(todaysSpecialDetailList);
         populateList();
@@ -187,7 +148,6 @@ public class TodaysSpecialFragment extends Fragment {
     private void populateList() {
         linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
-//        todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, oldCartDetailList);
         todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, todaysSpecialDetailList);
         recyclerView.setAdapter(todaysSpecialAdapter);
         todaysSpecialAdapter.notifyDataSetChanged();
