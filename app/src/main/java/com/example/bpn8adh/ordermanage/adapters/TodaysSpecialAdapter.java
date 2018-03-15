@@ -97,8 +97,9 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                 foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
-//                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + 1);
-//                cartToolbarCountListener.updateCartToolbarCount();
+                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + 1);
+                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
+                cartToolbarCountListener.updateCartToolbarCount();
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +109,9 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
-//                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
-//                    cartToolbarCountListener.updateCartToolbarCount();
+                    AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
+                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
+                    cartToolbarCountListener.updateCartToolbarCount();
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));

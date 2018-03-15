@@ -33,8 +33,8 @@ public class TodaysSpecialFragment extends Fragment {
     private static final String MSG_ADD_TO_CART_FAIL = "Please select item to add";
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.add_to_cart)
-    TextView addToCartBtn;
+//    @BindView(R.id.add_to_cart)
+//    TextView addToCartBtn;
 
     private Context mContext;
     private View view;
@@ -62,13 +62,13 @@ public class TodaysSpecialFragment extends Fragment {
         setItemDetails();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (AppSettings.getInstance().isEditCart()) {
-            addToCartBtn.setText("Update Cart");
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (AppSettings.getInstance().isEditCart()) {
+//            addToCartBtn.setText("Update Cart");
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,22 +79,22 @@ public class TodaysSpecialFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.add_to_cart})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_to_cart:
-                this.cartToolbarCountListener = (CartToolbarCountListener) mContext;
-                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                if (GeneralUtils.getTotalCount() != 0) {
-                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_SUCCESS);
-                } else {
-                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_FAIL);
-                }
-                cartToolbarCountListener.updateCartToolbarCount();
-
-                break;
-        }
-    }
+//    @OnClick({R.id.add_to_cart})
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.add_to_cart:
+////                this.cartToolbarCountListener = (CartToolbarCountListener) mContext;
+////                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
+////                if (GeneralUtils.getTotalCount() != 0) {
+////                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_SUCCESS);
+////                } else {
+////                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_FAIL);
+////                }
+////                cartToolbarCountListener.updateCartToolbarCount();
+//
+//                break;
+//        }
+//    }
 
 
     private void setItemDetails() {
