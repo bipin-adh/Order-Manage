@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.bpn8adh.ordermanage.OrderManageApplication;
+import com.example.bpn8adh.ordermanage.database.FirebaseManager;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +33,7 @@ public class AppSettings {
     private List<FoodDetails> cartDetailsList;
     private SharedPreferences sharedPreference;
     private boolean isEditCart;
+    private FirebaseManager firebaseInstance;
 
     public static AppSettings getInstance() {
         if (appSettings == null) {
@@ -42,6 +44,10 @@ public class AppSettings {
         }
         return appSettings;
     }
+    public void initializeFirebase() {
+        firebaseInstance = FirebaseManager.getInstance();
+    }
+
 
     public List<FoodDetails> getCartDetailsLists() {
         return cartDetailsList;

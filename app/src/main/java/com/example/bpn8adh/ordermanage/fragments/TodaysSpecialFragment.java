@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
+import com.example.bpn8adh.ordermanage.database.FirebaseManager;
 import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
@@ -98,38 +99,6 @@ public class TodaysSpecialFragment extends Fragment {
 
 
     private void setItemDetails() {
-
-        FoodDetails foodDetails = new FoodDetails();
-        foodDetails.setFoodName("Hyderabad Biryani");
-        foodDetails.setFoodPreparationTime("20 mins");
-        foodDetails.setFoodPrice(400);
-        foodDetails.setFoodQuantity(0);
-        foodDetails.setFoodImage("https://static.wixstatic.com/media/871a43_855845212afb4815a2e607fd9c4a9b76~mv2.jpg");
-        todaysSpecialDetailList.add(foodDetails);
-
-        FoodDetails foodDetails1 = new FoodDetails();
-        foodDetails1.setFoodName("Masala Tea");
-        foodDetails1.setFoodPreparationTime("10 mins");
-        foodDetails1.setFoodPrice(70);
-        foodDetails1.setFoodQuantity(0);
-        foodDetails1.setFoodImage("https://assets.epicurious.com/photos/579909083a12dd9d56024018/master/pass/spiced-milk-tea-masala-chai.jpg");
-        todaysSpecialDetailList.add(foodDetails1);
-
-        FoodDetails foodDetails2 = new FoodDetails();
-        foodDetails2.setFoodName("Chicken Curry");
-        foodDetails2.setFoodPreparationTime("25 mins");
-        foodDetails2.setFoodPrice(290);
-        foodDetails2.setFoodQuantity(0);
-        foodDetails2.setFoodImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZc8SEDp09gwbPaCebWEazNwlRgr860wp2oCwZR4mhCKc42hPjEw");
-        todaysSpecialDetailList.add(foodDetails2);
-
-        FoodDetails foodDetails3 = new FoodDetails();
-        foodDetails3.setFoodName("Coffee");
-        foodDetails3.setFoodPreparationTime("10 mins");
-        foodDetails3.setFoodPrice(200);
-        foodDetails3.setFoodQuantity(0);
-        foodDetails3.setFoodImage("http://ninjacoffeebarrecipes.com/wp-content/uploads/2015/12/Cafe_Mocha.jpg");
-        todaysSpecialDetailList.add(foodDetails3);
 
         oldCartDetailList.addAll(AppSettings.getInstance().getCartListFromPref());
 

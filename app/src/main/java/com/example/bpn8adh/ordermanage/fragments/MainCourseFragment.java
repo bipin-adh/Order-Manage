@@ -17,6 +17,7 @@ import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.activities.CartActivity;
 import com.example.bpn8adh.ordermanage.adapters.MainCourseAdapter;
+import com.example.bpn8adh.ordermanage.database.FirebaseManager;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
@@ -87,30 +88,6 @@ public class MainCourseFragment extends Fragment {
 //    }
 
     private void setItemDetails() {
-        FoodDetails foodDetails = new FoodDetails();
-        foodDetails.setFoodName("Chicken Corma");
-        foodDetails.setFoodPreparationTime("25 mins");
-        foodDetails.setFoodPrice(300);
-        foodDetails.setFoodQuantity(0);
-        foodDetails.setFoodImage("http://www.ektaindianrestaurant.com/fishtown/br/wp-content/uploads/sites/5/2017/02/Chicken-korma.jpg");
-        mainCourseDetailList.add(foodDetails);
-
-        FoodDetails foodDetails1 = new FoodDetails();
-        foodDetails1.setFoodName("Rice noodles with prawns");
-        foodDetails1.setFoodPreparationTime("15 mins");
-        foodDetails1.setFoodPrice(170);
-        foodDetails1.setFoodQuantity(0);
-        foodDetails1.setFoodImage("https://realfood.tesco.com/media/images/171961-rice-vermicellis-with-gambas-onions-and-peppers-HERO-1cdc243b-ec72-4f23-9c7f-61dedbe861b9-0-472x310.jpg");
-        mainCourseDetailList.add(foodDetails1);
-
-        FoodDetails foodDetails2 = new FoodDetails();
-        foodDetails2.setFoodName("Chilli bean soup with cheesy garlic bread");
-        foodDetails2.setFoodPreparationTime("30 mins");
-        foodDetails2.setFoodPrice(390);
-        foodDetails2.setFoodQuantity(0);
-        foodDetails2.setFoodImage("https://realfood.tesco.com/media/images/Chilli-bean-soup-with-cheesy-garlic-bread--HERO-a4c3e012-c012-4d6f-9aa0-e7c1916b6d7d-0-472x310.jpg");
-        mainCourseDetailList.add(foodDetails2);
-
 
         if (cartDetailList.size() != 0) {
             cartDetailList.clear();

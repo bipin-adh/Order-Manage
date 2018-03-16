@@ -17,6 +17,7 @@ import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.activities.CartActivity;
 import com.example.bpn8adh.ordermanage.adapters.SoupAdapter;
+import com.example.bpn8adh.ordermanage.database.FirebaseManager;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
@@ -86,29 +87,6 @@ public class SoupFragment extends Fragment {
 //    }
 
     private void setItemDetails() {
-        FoodDetails foodDetails = new FoodDetails();
-        foodDetails.setFoodName("Chicken Ball And Spinach Soup");
-        foodDetails.setFoodPreparationTime("25 mins");
-        foodDetails.setFoodPrice(120);
-        foodDetails.setFoodQuantity(0);
-        foodDetails.setFoodImage("https://www.wholefoodsmarket.com/sites/default/files/styles/header_recipe/public/media/3438-1.jpg?itok=WicsKlIK");
-        soupDetailList.add(foodDetails);
-
-        FoodDetails foodDetails1 = new FoodDetails();
-        foodDetails1.setFoodName("Roast Pumpkin Soup");
-        foodDetails1.setFoodPreparationTime("15 mins");
-        foodDetails1.setFoodPrice(250);
-        foodDetails1.setFoodQuantity(0);
-        foodDetails1.setFoodImage("http://img.taste.com.au/g_FqQjcv/taste/2016/11/roasted-pumpkin-soup-93906-1.jpeg");
-        soupDetailList.add(foodDetails1);
-
-        FoodDetails foodDetails2 = new FoodDetails();
-        foodDetails2.setFoodName("Charred Eggplant Soup");
-        foodDetails2.setFoodPreparationTime("30 mins");
-        foodDetails2.setFoodPrice(590);
-        foodDetails2.setFoodQuantity(0);
-        foodDetails2.setFoodImage("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/8/30/4/FNM_100110-NICA-012_s4x3.jpg.rend.hgtvcom.616.462.suffix/1379693798550.jpeg");
-        soupDetailList.add(foodDetails2);
 
         if (cartDetailList.size() != 0) {
             cartDetailList.clear();

@@ -18,7 +18,12 @@ public class OrderManageApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        // initialize settings class
         settings = AppSettings.getInstance();
+        initializeFirebase();
+    }
+    public void initializeFirebase() {
+        settings.initializeFirebase();
     }
 
     public static AppSettings getSettings() {
