@@ -1,7 +1,6 @@
 package com.example.bpn8adh.ordermanage.activities;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetProvider;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,10 +82,10 @@ public class CartActivity extends AppCompatActivity {
         startersCartDetailsList.clear();
         todaySpecialcartDetailsList.clear();
         cartDetailsList.clear();
-        Log.d(TAG, "onCreate: size:"+ startersCartDetailsList.size()+
-        todaySpecialcartDetailsList.size()+
-        +cartDetailsList.size());
-        if(OrderManageApplication.getSettings().getStartersListFromPref()!=null && !OrderManageApplication.getSettings().getStartersListFromPref().isEmpty()){
+        Log.d(TAG, "onCreate: size:" + startersCartDetailsList.size() +
+                todaySpecialcartDetailsList.size() +
+                +cartDetailsList.size());
+        if (OrderManageApplication.getSettings().getStartersListFromPref() != null && !OrderManageApplication.getSettings().getStartersListFromPref().isEmpty()) {
             for (FoodDetails cartDetails : OrderManageApplication.getSettings().getStartersListFromPref()) {
                 if (cartDetails.getFoodQuantity() != 0) {
                     Log.d(TAG, "onCreate: starter ===>" + cartDetails.getFoodName());
@@ -110,8 +109,8 @@ public class CartActivity extends AppCompatActivity {
         cartDetailsList.addAll(todaySpecialcartDetailsList);
 
         cartTotalPrice.setText("" + totalPrice);
-//        OrderManageApplication.getSettings().setCartListInPref(todaySpecialcartDetailsList);
-//        OrderManageApplication.getSettings().setStartersListInPref(startersCartDetailsList);
+        OrderManageApplication.getSettings().setCartListInPref(todaySpecialcartDetailsList);
+        OrderManageApplication.getSettings().setStartersListInPref(startersCartDetailsList);
         cartAdapter = new CartAdapter(CartActivity.this, cartDetailsList);
         recyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
@@ -155,9 +154,15 @@ public class CartActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                AppSettings.getInstance().setOrderHistoryinPref(cartDetailsList);
                 cartDetailsList.clear();
+                startersCartDetailsList.clear();
+                todaySpecialcartDetailsList.clear();
 //                AppSettings.getInstance().setCartToolbarCountInPref(0);
-                AppSettings.getInstance().setCartListInPref(cartDetailsList);
+                AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
+                AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
+
                 OrderManageApplication.getInstance().showToast(MSG_ORDER_SUCCESS);
                 cartAdapter.notifyDataSetChanged();
                 finish();
@@ -185,7 +190,11 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 cartDetailsList.clear();
-                AppSettings.getInstance().setCartListInPref(cartDetailsList);
+                startersCartDetailsList.clear();
+                todaySpecialcartDetailsList.clear();
+                AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
+                AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
+
                 cartAdapter.notifyDataSetChanged();
                 dialog.dismiss();
                 MainActivity.launchActivity(CartActivity.this);

@@ -26,10 +26,7 @@ public class AppSettings {
     private static final String SP_NAME = "orderManage";
     private static final String SP_CART_LIST = "cartList";
     private static final String SP_STARTERS_CART_LIST = "startersCartList";
-
-    private static final String SP_CART_NOTIFICATION_COUNT = "cartNotificationCount";
-    private static final String SP_STARTERS_CART_NOTIFICATION_COUNT = "cartStartersNotificationCount";
-    private static final String SP_FOOD_DETAILS = "foodDetails";
+    public static final String SP_ORDER_HISTORY_CART_LIST = "orderHistoryCartList";
 
     private static AppSettings appSettings;
     private static Context context;
@@ -85,6 +82,24 @@ public class AppSettings {
 
     public SharedPreferences.Editor getSharedPreferenceEditor() {
         return getSharedPreference().edit();
+    }
+
+    public void setOrderHistoryinPref(List<FoodDetails> foodDetailsList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(foodDetailsList);
+        getSharedPreferenceEditor().putString(SP_ORDER_HISTORY_CART_LIST, json).commit();
+    }
+
+    public List<FoodDetails> getOrderHistoryFromPref() {
+        String json = getSharedPreference().getString(SP_ORDER_HISTORY_CART_LIST, "");
+        Type type = new TypeToken<List<FoodDetails>>() {
+        }.getType();
+
+        List<FoodDetails> objects = new ArrayList<>();
+        if ((new Gson().fromJson(json, type)) != null) {
+            objects.addAll((Collection<? extends FoodDetails>) new Gson().fromJson(json, type));
+        }
+        return objects;
     }
 
     public void setCartListInPref(List<FoodDetails> foodDetailsList) {
