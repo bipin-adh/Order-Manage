@@ -21,6 +21,7 @@ import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Bipin on 28/02/18.
@@ -33,7 +34,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
     private Context context;
     private MyViewHolder myViewHolder;
 
-    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private List<FoodDetails> foodDetailList = new ArrayList<>();
     private String foodName;
     private int foodPrice;
     private String foodPrepTime;
@@ -41,7 +42,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
 
     private CartToolbarCountListener cartToolbarCountListener;
 
-    public TodaysSpecialAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
+    public TodaysSpecialAdapter(Context context, List<FoodDetails> foodDetailList) {
         this.context = context;
         this.foodDetailList = foodDetailList;
         this.cartToolbarCountListener = (CartToolbarCountListener) context;
@@ -97,9 +98,9 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                 foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
-                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + 1);
-                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                cartToolbarCountListener.updateCartToolbarCount();
+
+                AppSettings.getInstance().setCartListInPref(foodDetailList);
+                cartToolbarCountListener.updateCartToolbarCount(true,false);
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +110,9 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
-                    AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
-                    cartToolbarCountListener.updateCartToolbarCount();
+
+                    AppSettings.getInstance().setCartListInPref(foodDetailList);
+                    cartToolbarCountListener.updateCartToolbarCount(true,false);
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
@@ -121,14 +122,6 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 }
             }
         });
-//        holder.textViewAddToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() + foodDetails.getFoodQuantity());
-//                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-//                cartToolbarCountListener.updateCartToolbarCount();
-//            }
-//        });
     }
 
     @Override
@@ -141,7 +134,6 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
         TextView textViewPrepTime;
         TextView textViewQuantityTotal;
         TextView textViewPrice;
-        TextView textViewAddToCart;
 
         ProgressBar progressBar;
         ImageView imageViewItem;
@@ -159,7 +151,6 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
             imageViewQuantityIncrease = view.findViewById(R.id.iv_quantity_increase);
             imageViewQuantityDecrease = view.findViewById(R.id.iv_quantity_decrease);
             textViewQuantityTotal = view.findViewById(R.id.tv_item_quantity);
-//            textViewAddToCart = view.findViewById(R.id.tv_add_to_cart);
         }
     }
 }

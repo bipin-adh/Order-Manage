@@ -60,6 +60,8 @@ public class CartActivity extends AppCompatActivity {
     private List<FoodDetails> cartDetailsList = new ArrayList<>();
     private int totalPrice = 0;
     private CartAdapter cartAdapter;
+    private List<FoodDetails> startersCartDetailsList = new ArrayList<>();
+    private List<FoodDetails> todaySpecialcartDetailsList = new ArrayList<>();
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, CartActivity.class);
@@ -78,18 +80,38 @@ public class CartActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        startersCartDetailsList.clear();
+        todaySpecialcartDetailsList.clear();
         cartDetailsList.clear();
-//        cartDetailsList = OrderManageApplication.getSettings().getCartListFromPref();
-        if (OrderManageApplication.getSettings().getCartListFromPref() != null && !OrderManageApplication.getSettings().getCartListFromPref().isEmpty()) {
-            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getCartListFromPref()) {
+        Log.d(TAG, "onCreate: size:"+ startersCartDetailsList.size()+
+        todaySpecialcartDetailsList.size()+
+        +cartDetailsList.size());
+        if(OrderManageApplication.getSettings().getStartersListFromPref()!=null && !OrderManageApplication.getSettings().getStartersListFromPref().isEmpty()){
+            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getStartersListFromPref()) {
                 if (cartDetails.getFoodQuantity() != 0) {
-                    cartDetailsList.add(cartDetails);
+                    Log.d(TAG, "onCreate: starter ===>" + cartDetails.getFoodName());
+                    Log.d(TAG, "onCreate: starter ===>" + cartDetails.getFoodQuantity());
+                    startersCartDetailsList.add(cartDetails);
                     totalPrice = totalPrice + cartDetails.getFoodPrice() * cartDetails.getFoodQuantity();
                 }
             }
         }
+        if (OrderManageApplication.getSettings().getCartListFromPref() != null && !OrderManageApplication.getSettings().getCartListFromPref().isEmpty()) {
+            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getCartListFromPref()) {
+                if (cartDetails.getFoodQuantity() != 0) {
+                    Log.d(TAG, "onCreate: todays ===>" + cartDetails.getFoodName());
+                    Log.d(TAG, "onCreate: todays ===>" + cartDetails.getFoodQuantity());
+                    todaySpecialcartDetailsList.add(cartDetails);
+                    totalPrice = totalPrice + cartDetails.getFoodPrice() * cartDetails.getFoodQuantity();
+                }
+            }
+        }
+        cartDetailsList.addAll(startersCartDetailsList);
+        cartDetailsList.addAll(todaySpecialcartDetailsList);
+
         cartTotalPrice.setText("" + totalPrice);
-        OrderManageApplication.getSettings().setCartListInPref(cartDetailsList);
+//        OrderManageApplication.getSettings().setCartListInPref(todaySpecialcartDetailsList);
+//        OrderManageApplication.getSettings().setStartersListInPref(startersCartDetailsList);
         cartAdapter = new CartAdapter(CartActivity.this, cartDetailsList);
         recyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();

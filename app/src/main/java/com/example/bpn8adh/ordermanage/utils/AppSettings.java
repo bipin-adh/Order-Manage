@@ -25,12 +25,16 @@ public class AppSettings {
     public static final String TAG = AppSettings.class.getSimpleName();
     private static final String SP_NAME = "orderManage";
     private static final String SP_CART_LIST = "cartList";
+    private static final String SP_STARTERS_CART_LIST = "startersCartList";
+
     private static final String SP_CART_NOTIFICATION_COUNT = "cartNotificationCount";
+    private static final String SP_STARTERS_CART_NOTIFICATION_COUNT = "cartStartersNotificationCount";
     private static final String SP_FOOD_DETAILS = "foodDetails";
 
     private static AppSettings appSettings;
     private static Context context;
-    private List<FoodDetails> cartDetailsList;
+    private List<FoodDetails> cartDetailsList = new ArrayList<>();
+    private List<FoodDetails> startersDetailsLists = new ArrayList<>();
     private SharedPreferences sharedPreference;
     private boolean isEditCart;
     private FirebaseManager firebaseInstance;
@@ -44,6 +48,7 @@ public class AppSettings {
         }
         return appSettings;
     }
+
     public void initializeFirebase() {
         firebaseInstance = FirebaseManager.getInstance();
     }
@@ -55,6 +60,14 @@ public class AppSettings {
 
     public void setCartDetailsLists(List<FoodDetails> cartDetailsLists) {
         this.cartDetailsList = cartDetailsLists;
+    }
+
+    public void setStartersDetailsLists(List<FoodDetails> startersDetailsLists) {
+        this.startersDetailsLists = startersDetailsLists;
+    }
+
+    public List<FoodDetails> getStartersDetailsLists() {
+        return startersDetailsLists;
     }
 
     public void clearSharedPrefData() {
@@ -74,9 +87,9 @@ public class AppSettings {
         return getSharedPreference().edit();
     }
 
-    public void setCartListInPref(List<FoodDetails> notificationDetailsList) {
+    public void setCartListInPref(List<FoodDetails> foodDetailsList) {
         Gson gson = new Gson();
-        String json = gson.toJson(notificationDetailsList);
+        String json = gson.toJson(foodDetailsList);
         getSharedPreferenceEditor().putString(SP_CART_LIST, json).commit();
     }
 
@@ -92,24 +105,22 @@ public class AppSettings {
         return objects;
     }
 
-    public int getCartToolbarCountFromPref() {
-        return (getSharedPreference().getInt(SP_CART_NOTIFICATION_COUNT, 0));
+    public void setStartersListInPref(List<FoodDetails> foodDetailsList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(foodDetailsList);
+        getSharedPreferenceEditor().putString(SP_STARTERS_CART_LIST, json).commit();
     }
 
-    public void setCartToolbarCountInPref(int cartToolbarCount) {
-        getSharedPreferenceEditor().putInt(SP_CART_NOTIFICATION_COUNT, cartToolbarCount).commit();
-    }
+    public List<FoodDetails> getStartersListFromPref() {
+        String json = getSharedPreference().getString(SP_STARTERS_CART_LIST, "");
+        Type type = new TypeToken<List<FoodDetails>>() {
+        }.getType();
 
-    public void setFoodDetails(boolean isDataSet) {
-        getSharedPreferenceEditor().putBoolean(SP_FOOD_DETAILS, isDataSet);
-    }
-
-    public boolean isDataSet() {
-        return getSharedPreference().getBoolean(SP_FOOD_DETAILS, false);
-    }
-
-    public boolean isEditCart() {
-        return isEditCart;
+        List<FoodDetails> objects = new ArrayList<>();
+        if ((new Gson().fromJson(json, type)) != null) {
+            objects.addAll((Collection<? extends FoodDetails>) new Gson().fromJson(json, type));
+        }
+        return objects;
     }
 
     public void setEditCartState(boolean isEditCart) {

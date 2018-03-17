@@ -1,33 +1,39 @@
 package com.example.bpn8adh.ordermanage.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
-import com.example.bpn8adh.ordermanage.activities.CartActivity;
 import com.example.bpn8adh.ordermanage.adapters.StartersAdapter;
 import com.example.bpn8adh.ordermanage.database.FirebaseManager;
+import com.example.bpn8adh.ordermanage.database.callbacks.StartersCallback;
+import com.example.bpn8adh.ordermanage.database.callbacks.TodaysSpecialCallback;
+import com.example.bpn8adh.ordermanage.interfaces.UiUpdateListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
+import com.example.bpn8adh.ordermanage.utils.DialogUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StartersFragment extends Fragment {
+public class StartersFragment extends Fragment implements UiUpdateListener {
+    public static final String TAG = StartersFragment.class.getSimpleName();
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 //    @BindView(R.id.add_to_cart)
@@ -36,10 +42,11 @@ public class StartersFragment extends Fragment {
     private Context mContext;
     private LinearLayoutManager linearLayoutManager;
     private StartersAdapter startersAdapter;
-    private ArrayList<FoodDetails> startersDetailList = new ArrayList<>();
+    private List<FoodDetails> startersDetailList = new ArrayList<>();
     private View view;
     private ArrayList<FoodDetails> cartDetailList = new ArrayList<>();
     private ArrayList<FoodDetails> oldCartDetailList = new ArrayList<>();
+    private ProgressDialog progressDialog;
 
     public StartersFragment() {
         // Required empty public constructor
@@ -52,13 +59,15 @@ public class StartersFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        progressDialog = DialogUtils.showProgressDialog(getActivity(), null, getString(R.string.msg_progress_fetching_data), true, false);
+        FirebaseManager.getInstance().getStartersList(new StartersCallback(this));
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (startersDetailList.size() != 0) {
-            startersDetailList.clear();
-        }
-        setItemDetails();
     }
 
     @Override
@@ -71,17 +80,9 @@ public class StartersFragment extends Fragment {
         return view;
     }
 
-//    @OnClick({R.id.add_to_cart})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.add_to_cart:
-//                break;
-//        }
-//    }
-
     private void setItemDetails() {
-
-        oldCartDetailList.addAll(AppSettings.getInstance().getCartListFromPref());
+        startersDetailList = AppSettings.getInstance().getStartersDetailsLists();
+        oldCartDetailList.addAll(AppSettings.getInstance().getStartersListFromPref());
 
         for (FoodDetails newFoodDetail : startersDetailList) {
             for (FoodDetails preFoodDetail : oldCartDetailList) {
@@ -91,7 +92,7 @@ public class StartersFragment extends Fragment {
             }
         }
 
-        AppSettings.getInstance().setCartDetailsLists(startersDetailList);
+        AppSettings.getInstance().setStartersDetailsLists(startersDetailList);
         populateList();
     }
 
@@ -101,5 +102,17 @@ public class StartersFragment extends Fragment {
         startersAdapter = new StartersAdapter(mContext, startersDetailList);
         recyclerView.setAdapter(startersAdapter);
         startersAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void success() {
+        progressDialog.dismiss();
+        setItemDetails();
+    }
+
+    @Override
+    public void failure(String msg) {
+        progressDialog.dismiss();
+        OrderManageApplication.getInstance().showToast(msg);
     }
 }

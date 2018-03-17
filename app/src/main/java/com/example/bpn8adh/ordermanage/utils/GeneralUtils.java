@@ -2,6 +2,7 @@ package com.example.bpn8adh.ordermanage.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 
@@ -10,6 +11,8 @@ import com.example.bpn8adh.ordermanage.models.FoodDetails;
  */
 
 public class GeneralUtils {
+    public static final String TAG = GeneralUtils.class.getSimpleName();
+
     private static final String FONT_PATH = "fonts/Montserrat-Regular.ttf";
 
     public static Typeface getTypeface(final Context context) {
@@ -17,7 +20,7 @@ public class GeneralUtils {
         return typeface;
     }
 
-    public static int getTotalCount() {
+    public static int getTotalCountTodaysSpecial() {
         int totalCount = 0;
         if (AppSettings.getInstance().getCartListFromPref() != null && !AppSettings.getInstance().getCartListFromPref().isEmpty()) {
             for (FoodDetails foodDetails : AppSettings.getInstance().getCartListFromPref()) {
@@ -25,5 +28,14 @@ public class GeneralUtils {
             }
         }
         return totalCount;
+    }
+    public static int getTotalCountStarters() {
+        int totalCount=0;
+        if (AppSettings.getInstance().getStartersListFromPref() != null && !AppSettings.getInstance().getStartersListFromPref().isEmpty()) {
+            for (FoodDetails foodDetails : AppSettings.getInstance().getStartersListFromPref()) {
+                totalCount = totalCount + foodDetails.getFoodQuantity();
+            }
+        }
+        return (totalCount);
     }
 }

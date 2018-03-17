@@ -88,7 +88,6 @@ public class MainCourseFragment extends Fragment {
 //    }
 
     private void setItemDetails() {
-
         if (cartDetailList.size() != 0) {
             cartDetailList.clear();
         }

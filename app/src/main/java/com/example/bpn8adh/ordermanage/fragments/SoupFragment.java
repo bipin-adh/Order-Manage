@@ -87,7 +87,6 @@ public class SoupFragment extends Fragment {
 //    }
 
     private void setItemDetails() {
-
         if (cartDetailList.size() != 0) {
             cartDetailList.clear();
         }

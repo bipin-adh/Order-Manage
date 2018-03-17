@@ -24,6 +24,7 @@ import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyViewHolder> {
 
@@ -32,13 +33,13 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
     private Context context;
     private MyViewHolder myViewHolder;
 
-    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
+    private List<FoodDetails> foodDetailList = new ArrayList<>();
     private String foodName;
     private int foodPrice;
     private String foodPrepTime;
     private String foodImage;
 
-    public StartersAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
+    public StartersAdapter(Context context, List<FoodDetails> foodDetailList) {
         this.context = context;
         this.foodDetailList = foodDetailList;
         this.cartToolbarCountListener = (CartToolbarCountListener) context;
@@ -94,9 +95,8 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                 foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
-                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
-                cartToolbarCountListener.updateCartToolbarCount();
+                AppSettings.getInstance().setStartersListInPref(foodDetailList);
+                cartToolbarCountListener.updateCartToolbarCount(false, true);
 
             }
         });
@@ -108,9 +108,8 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
-                    AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                    AppSettings.getInstance().setCartToolbarCountInPref(AppSettings.getInstance().getCartToolbarCountFromPref() - 1);
-                    cartToolbarCountListener.updateCartToolbarCount();
+                    AppSettings.getInstance().setStartersListInPref(foodDetailList);
+                    cartToolbarCountListener.updateCartToolbarCount(false, true);
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));

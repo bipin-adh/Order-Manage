@@ -1,6 +1,7 @@
 package com.example.bpn8adh.ordermanage.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,11 +18,14 @@ import android.widget.TextView;
 import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TabPagerAdapter;
+import com.example.bpn8adh.ordermanage.database.FirebaseManager;
+import com.example.bpn8adh.ordermanage.database.callbacks.TodaysSpecialCallback;
 import com.example.bpn8adh.ordermanage.fragments.MainCourseFragment;
 import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
 import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
+import com.example.bpn8adh.ordermanage.interfaces.UiUpdateListener;
 import com.example.bpn8adh.ordermanage.utils.DialogUtils;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     @BindView(R.id.tv_cart_notify)
     TextView textViewCartListItemNum;
     private int totalCount = 0;
+    private int total1=0;
+    private int total2=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initTab();
-        totalCount = GeneralUtils.getTotalCount();
+        totalCount = GeneralUtils.getTotalCountTodaysSpecial()+GeneralUtils.getTotalCountStarters();
         if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
         } else {
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         switch (view.getId()) {
             case R.id.cart_toolbar_notification:
 //                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                if (GeneralUtils.getTotalCount() == 0) {
+                if (GeneralUtils.getTotalCountStarters()+GeneralUtils.getTotalCountTodaysSpecial() == 0) {
                     OrderManageApplication.getInstance().showToast(MSG_NO_ITEMS_IN_CART);
                 } else {
                     CartActivity.launchActivity(MainActivity.this);
@@ -121,19 +127,27 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         String tabTitles[] = getResources().getStringArray(R.array.tab_titles);
         adapter.addFragWithTitle(new TodaysSpecialFragment(), tabTitles[0]);
         adapter.addFragWithTitle(new StartersFragment(), tabTitles[1]);
-        adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
-        adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
+//        adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
+//        adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
     }
 
     @Override
-    public void updateCartToolbarCount() {
-        if (GeneralUtils.getTotalCount() == 0) {
+    public void updateCartToolbarCount(boolean isTodaysSpecial,boolean isStarters) {
+        if(isTodaysSpecial){
+            total1 = GeneralUtils.getTotalCountTodaysSpecial();
+        }
+        if(isStarters){
+            total2 = GeneralUtils.getTotalCountStarters();
+        }
+        totalCount = total1+total2;
+
+        if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
         } else {
             textViewCartListItemNum.setVisibility(View.VISIBLE);
-            textViewCartListItemNum.setText("" + GeneralUtils.getTotalCount());
+            textViewCartListItemNum.setText("" + totalCount);
         }
     }
 
@@ -141,4 +155,5 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     public void onBackPressed() {
         DialogUtils.exitDialog(this);
     }
+
 }

@@ -5,5 +5,5 @@ package com.example.bpn8adh.ordermanage.interfaces;
  */
 
 public interface CartToolbarCountListener {
-    void updateCartToolbarCount();
+    void updateCartToolbarCount(boolean isTodaysSpecial,boolean isStarters);
 }

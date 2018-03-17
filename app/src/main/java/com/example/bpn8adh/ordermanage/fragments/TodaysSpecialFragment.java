@@ -1,5 +1,6 @@
 package com.example.bpn8adh.ordermanage.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,12 +16,16 @@ import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TodaysSpecialAdapter;
 import com.example.bpn8adh.ordermanage.database.FirebaseManager;
+import com.example.bpn8adh.ordermanage.database.callbacks.TodaysSpecialCallback;
 import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
+import com.example.bpn8adh.ordermanage.interfaces.UiUpdateListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
+import com.example.bpn8adh.ordermanage.utils.DialogUtils;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +34,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodaysSpecialFragment extends Fragment {
+public class TodaysSpecialFragment extends Fragment implements UiUpdateListener{
     private static final String MSG_ADD_TO_CART_SUCCESS = "Items added to cart succesfully";
     private static final String MSG_ADD_TO_CART_FAIL = "Please select item to add";
     @BindView(R.id.recyclerView)
@@ -42,10 +47,11 @@ public class TodaysSpecialFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private TodaysSpecialAdapter todaysSpecialAdapter;
 
-    private ArrayList<FoodDetails> todaysSpecialDetailList = new ArrayList<>();
-    private ArrayList<FoodDetails> oldCartDetailList = new ArrayList<>();
+    private List<FoodDetails> todaysSpecialDetailList = new ArrayList<>();
+    private List<FoodDetails> oldCartDetailList = new ArrayList<>();
 
     private CartToolbarCountListener cartToolbarCountListener;
+    private ProgressDialog progressDialog;
 
     public TodaysSpecialFragment() {
         // Required empty public constructor
@@ -60,16 +66,14 @@ public class TodaysSpecialFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setItemDetails();
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (AppSettings.getInstance().isEditCart()) {
-//            addToCartBtn.setText("Update Cart");
-//        }
-//    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+            progressDialog = DialogUtils.showProgressDialog(getActivity(), null, getString(R.string.msg_progress_fetching_data), true, false);
+            FirebaseManager.getInstance().getTodaysSpecialList(new TodaysSpecialCallback(this));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,7 +105,6 @@ public class TodaysSpecialFragment extends Fragment {
     private void setItemDetails() {
 
         oldCartDetailList.addAll(AppSettings.getInstance().getCartListFromPref());
-
         for (FoodDetails newFoodDetail : todaysSpecialDetailList) {
             for (FoodDetails preFoodDetail : oldCartDetailList) {
                 if (preFoodDetail.getFoodName().equals(newFoodDetail.getFoodName())) {
@@ -120,5 +123,18 @@ public class TodaysSpecialFragment extends Fragment {
         todaysSpecialAdapter = new TodaysSpecialAdapter(mContext, todaysSpecialDetailList);
         recyclerView.setAdapter(todaysSpecialAdapter);
         todaysSpecialAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void success() {
+        progressDialog.dismiss();
+        todaysSpecialDetailList = AppSettings.getInstance().getCartDetailsLists();
+        setItemDetails();
+    }
+
+    @Override
+    public void failure(String msg) {
+        progressDialog.dismiss();
+        OrderManageApplication.getInstance().showToast(msg);
     }
 }

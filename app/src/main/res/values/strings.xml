@@ -8,5 +8,6 @@
     </string-array>
 
     <string name="item_price" translatable="false">Rs %d</string>
+    <string name="msg_progress_fetching_data">Fetching data</string>
 
 </resources>
