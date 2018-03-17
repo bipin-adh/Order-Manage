@@ -10,4 +10,8 @@
     <string name="item_price" translatable="false">Rs %d</string>
     <string name="msg_progress_fetching_data">Fetching data</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
 </resources>

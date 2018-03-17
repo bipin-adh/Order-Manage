@@ -65,6 +65,8 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         foodPrice = foodDetails.getFoodPrice();
         foodImage = foodDetails.getFoodImage();
         foodPrepTime = foodDetails.getFoodPreparationTime();
+        // set previous value saved in Shared pref... i.e. orders yet to be placed
+        holder.textViewQuantityTotal.setText(""+foodDetails.getFoodQuantity());
 
         Glide.with(context)
                 .load(foodImage)

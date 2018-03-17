@@ -7,9 +7,16 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -33,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements CartToolbarCountListener {
+public class MainActivity extends AppCompatActivity implements CartToolbarCountListener, NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private static final String MSG_NO_ITEMS_IN_CART = "No items added to cart";
@@ -45,16 +52,17 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     @BindView(R.id.tv_cart_notify)
     TextView textViewCartListItemNum;
     private int totalCount = 0;
-    private int total1=0;
-    private int total2=0;
+    private int total1 = 0;
+    private int total2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        iniNavigation();
         initTab();
-        totalCount = GeneralUtils.getTotalCountTodaysSpecial()+GeneralUtils.getTotalCountStarters();
+        totalCount = GeneralUtils.getTotalCountTodaysSpecial() + GeneralUtils.getTotalCountStarters();
         if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
         } else {
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         switch (view.getId()) {
             case R.id.cart_toolbar_notification:
 //                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-                if (GeneralUtils.getTotalCountStarters()+GeneralUtils.getTotalCountTodaysSpecial() == 0) {
+                if (GeneralUtils.getTotalCountStarters() + GeneralUtils.getTotalCountTodaysSpecial() == 0) {
                     OrderManageApplication.getInstance().showToast(MSG_NO_ITEMS_IN_CART);
                 } else {
                     CartActivity.launchActivity(MainActivity.this);
@@ -96,6 +104,19 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
             }
         };
         t.start();
+    }
+
+    private void iniNavigation() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void initTab() {
@@ -134,14 +155,14 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     }
 
     @Override
-    public void updateCartToolbarCount(boolean isTodaysSpecial,boolean isStarters) {
-        if(isTodaysSpecial){
+    public void updateCartToolbarCount(boolean isTodaysSpecial, boolean isStarters) {
+        if (isTodaysSpecial) {
             total1 = GeneralUtils.getTotalCountTodaysSpecial();
         }
-        if(isStarters){
+        if (isStarters) {
             total2 = GeneralUtils.getTotalCountStarters();
         }
-        totalCount = total1+total2;
+        totalCount = total1 + total2;
 
         if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
@@ -156,4 +177,27 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         DialogUtils.exitDialog(this);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

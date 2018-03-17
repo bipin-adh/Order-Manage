@@ -84,24 +84,6 @@ public class TodaysSpecialFragment extends Fragment implements UiUpdateListener{
         return view;
     }
 
-//    @OnClick({R.id.add_to_cart})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.add_to_cart:
-////                this.cartToolbarCountListener = (CartToolbarCountListener) mContext;
-////                AppSettings.getInstance().setCartListInPref(AppSettings.getInstance().getCartDetailsLists());
-////                if (GeneralUtils.getTotalCount() != 0) {
-////                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_SUCCESS);
-////                } else {
-////                    OrderManageApplication.getInstance().showToast(MSG_ADD_TO_CART_FAIL);
-////                }
-////                cartToolbarCountListener.updateCartToolbarCount();
-//
-//                break;
-//        }
-//    }
-
-
     private void setItemDetails() {
 
         oldCartDetailList.addAll(AppSettings.getInstance().getCartListFromPref());

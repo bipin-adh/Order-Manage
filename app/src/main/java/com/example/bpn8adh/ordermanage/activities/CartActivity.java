@@ -163,9 +163,9 @@ public class CartActivity extends AppCompatActivity {
                 AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
                 AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
 
-                OrderManageApplication.getInstance().showToast(MSG_ORDER_SUCCESS);
                 cartAdapter.notifyDataSetChanged();
                 finish();
+                OrderManageApplication.getInstance().showToast(MSG_ORDER_SUCCESS);
                 Intent launchHomeIntent = new Intent(CartActivity.this, MainActivity.class);
                 startActivity(launchHomeIntent);
             }

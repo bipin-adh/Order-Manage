@@ -23,7 +23,7 @@
 
     <style name="AppTheme.NoActionBar.TranslucentStatus" parent="AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowBackground">@drawable/new_splash_screen</item>
+        <item name="android:windowBackground">@drawable/splash_screen_red</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

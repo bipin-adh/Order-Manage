@@ -36,8 +36,6 @@ public class StartersFragment extends Fragment implements UiUpdateListener {
     public static final String TAG = StartersFragment.class.getSimpleName();
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-//    @BindView(R.id.add_to_cart)
-//    Button addToCartBtn;
 
     private Context mContext;
     private LinearLayoutManager linearLayoutManager;
