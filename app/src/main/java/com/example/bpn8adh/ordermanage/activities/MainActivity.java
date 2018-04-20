@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     private int totalCount = 0;
     private int total1 = 0;
     private int total2 = 0;
+    private int total3 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,21 +149,24 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         String tabTitles[] = getResources().getStringArray(R.array.tab_titles);
         adapter.addFragWithTitle(new TodaysSpecialFragment(), tabTitles[0]);
         adapter.addFragWithTitle(new StartersFragment(), tabTitles[1]);
-//        adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
+        adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
 //        adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
     }
 
     @Override
-    public void updateCartToolbarCount(boolean isTodaysSpecial, boolean isStarters) {
+    public void updateCartToolbarCount(boolean isTodaysSpecial, boolean isStarters, boolean isSoup, boolean isMainCourse) {
         if (isTodaysSpecial) {
             total1 = GeneralUtils.getTotalCountTodaysSpecial();
         }
         if (isStarters) {
             total2 = GeneralUtils.getTotalCountStarters();
         }
-        totalCount = total1 + total2;
+        if (isSoup) {
+            total3 = GeneralUtils.getTotalCountSoup();
+        }
+        totalCount = total1 + total2 + total3;
 
         if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);

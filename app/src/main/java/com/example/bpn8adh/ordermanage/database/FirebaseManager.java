@@ -46,6 +46,10 @@ public class FirebaseManager {
         Query childRef = getRootDbInstance().child("foodCategories").child("starters").orderByChild("foodName");
         childRef.addValueEventListener(valueEventListener);
     }
+    public void getSoupList(ValueEventListener valueEventListener) {
+        Query childRef = getRootDbInstance().child("foodCategories").child("soup").orderByChild("foodName");
+        childRef.addValueEventListener(valueEventListener);
+    }
 
 //    public void setData(ArrayList<FoodDetails> list1) {
 //        for(FoodDetails foodDetails: list1){

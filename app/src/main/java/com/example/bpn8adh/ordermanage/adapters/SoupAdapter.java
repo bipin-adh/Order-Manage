@@ -15,34 +15,40 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.bpn8adh.ordermanage.R;
+import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
+import com.example.bpn8adh.ordermanage.utils.AppSettings;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Bipin on 28/02/18.
  */
 
-public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
+public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder> {
 
     private int DEFAULT_ITEM_QUANTITY_VALUE = 0;
     private Context context;
     private MyViewHolder myViewHolder;
+    private List<FoodDetails> foodDetailList = new ArrayList<>();
 
-    private ArrayList<FoodDetails> foodDetailList = new ArrayList<>();
     private String foodName;
     private int foodPrice;
     private String foodPrepTime;
     private String foodImage;
 
-    public SoupAdapter(Context context, ArrayList<FoodDetails> foodDetailList) {
+    private final CartToolbarCountListener cartToolbarCountListener;
+
+    public SoupAdapter(Context context, List<FoodDetails> foodDetailList) {
         this.context = context;
         this.foodDetailList = foodDetailList;
+        this.cartToolbarCountListener = (CartToolbarCountListener) context;
     }
+
 
     @Override
     public SoupAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View itemView;
         itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_fragment, parent, false);
@@ -60,6 +66,7 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
         foodPrice = foodDetails.getFoodPrice();
         foodImage = foodDetails.getFoodImage();
         foodPrepTime = foodDetails.getFoodPreparationTime();
+        holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
         Glide.with(context)
                 .load(foodImage)
@@ -67,21 +74,21 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
                 .error(R.drawable.error_no_preview)
                 .centerCrop()
                 .into(new BitmapImageViewTarget(holder.imageViewItem) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
 //                circularBitmapDrawable.setCircular(true);
 //                circularBitmapDrawable.setCornerRadius(16);
-                holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
-                if (holder.progressBar != null) {
-                    holder.progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
+                        holder.imageViewItem.setImageDrawable(circularBitmapDrawable);
+                        if (holder.progressBar != null) {
+                            holder.progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
         holder.textViewItemName.setText(foodName);
         holder.textViewPrepTime.setText(foodPrepTime);
-        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price),foodPrice));
+        holder.textViewPrice.setText(String.format(context.getString(R.string.item_price), foodPrice));
 
         holder.imageViewQuantityIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +96,9 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
                 holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                 foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() + 1);
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
+
+                AppSettings.getInstance().setSoupListInPref(foodDetailList);
+                cartToolbarCountListener.updateCartToolbarCount(false, false, true, false);
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +108,10 @@ public class SoupAdapter extends RecyclerView.Adapter<SoupAdapter.MyViewHolder>{
                     holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     foodDetails.setFoodQuantity(foodDetails.getFoodQuantity() - 1);
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
+
+                    AppSettings.getInstance().setSoupListInPref(foodDetailList);
+                    cartToolbarCountListener.updateCartToolbarCount(false, false, true, false);
+
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));
                     }

@@ -61,6 +61,7 @@ public class CartActivity extends AppCompatActivity {
     private CartAdapter cartAdapter;
     private List<FoodDetails> startersCartDetailsList = new ArrayList<>();
     private List<FoodDetails> todaySpecialcartDetailsList = new ArrayList<>();
+    private List<FoodDetails> soupCartDetailsList = new ArrayList<>();
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, CartActivity.class);
@@ -105,12 +106,25 @@ public class CartActivity extends AppCompatActivity {
                 }
             }
         }
+        if (OrderManageApplication.getSettings().getSoupListFromPref() != null && !OrderManageApplication.getSettings().getSoupListFromPref().isEmpty()) {
+            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getSoupListFromPref()) {
+                if (cartDetails.getFoodQuantity() != 0) {
+                    Log.d(TAG, "onCreate: todays ===>" + cartDetails.getFoodName());
+                    Log.d(TAG, "onCreate: todays ===>" + cartDetails.getFoodQuantity());
+                    soupCartDetailsList.add(cartDetails);
+                    totalPrice = totalPrice + cartDetails.getFoodPrice() * cartDetails.getFoodQuantity();
+                }
+            }
+        }
         cartDetailsList.addAll(startersCartDetailsList);
         cartDetailsList.addAll(todaySpecialcartDetailsList);
+        cartDetailsList.addAll(soupCartDetailsList);
 
         cartTotalPrice.setText("" + totalPrice);
         OrderManageApplication.getSettings().setCartListInPref(todaySpecialcartDetailsList);
         OrderManageApplication.getSettings().setStartersListInPref(startersCartDetailsList);
+        OrderManageApplication.getSettings().setSoupListInPref(soupCartDetailsList);
+
         cartAdapter = new CartAdapter(CartActivity.this, cartDetailsList);
         recyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
@@ -159,9 +173,11 @@ public class CartActivity extends AppCompatActivity {
                 cartDetailsList.clear();
                 startersCartDetailsList.clear();
                 todaySpecialcartDetailsList.clear();
+                soupCartDetailsList.clear();
 //                AppSettings.getInstance().setCartToolbarCountInPref(0);
                 AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
                 AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
+                AppSettings.getInstance().setSoupListInPref(soupCartDetailsList);
 
                 cartAdapter.notifyDataSetChanged();
                 finish();
@@ -192,8 +208,10 @@ public class CartActivity extends AppCompatActivity {
                 cartDetailsList.clear();
                 startersCartDetailsList.clear();
                 todaySpecialcartDetailsList.clear();
+                soupCartDetailsList.clear();
                 AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
                 AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
+                AppSettings.getInstance().setSoupListInPref(soupCartDetailsList);
 
                 cartAdapter.notifyDataSetChanged();
                 dialog.dismiss();

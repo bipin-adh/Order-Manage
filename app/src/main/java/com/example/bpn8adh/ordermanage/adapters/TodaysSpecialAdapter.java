@@ -68,7 +68,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
         foodPrice = foodDetails.getFoodPrice();
         foodImage = foodDetails.getFoodImage();
         foodPrepTime = foodDetails.getFoodPreparationTime();
-        holder.textViewQuantityTotal.setText(""+foodDetails.getFoodQuantity());
+        holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
         Glide.with(context)
                 .load(foodImage)
@@ -100,7 +100,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
                 AppSettings.getInstance().setCartListInPref(foodDetailList);
-                cartToolbarCountListener.updateCartToolbarCount(true,false);
+                cartToolbarCountListener.updateCartToolbarCount(true, false, false, false);
             }
         });
         holder.imageViewQuantityDecrease.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +112,7 @@ public class TodaysSpecialAdapter extends RecyclerView.Adapter<TodaysSpecialAdap
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
                     AppSettings.getInstance().setCartListInPref(foodDetailList);
-                    cartToolbarCountListener.updateCartToolbarCount(true,false);
+                    cartToolbarCountListener.updateCartToolbarCount(true, false, false, false);
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));

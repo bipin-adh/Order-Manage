@@ -66,7 +66,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
         foodImage = foodDetails.getFoodImage();
         foodPrepTime = foodDetails.getFoodPreparationTime();
         // set previous value saved in Shared pref... i.e. orders yet to be placed
-        holder.textViewQuantityTotal.setText(""+foodDetails.getFoodQuantity());
+        holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
         Glide.with(context)
                 .load(foodImage)
@@ -98,7 +98,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                 holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
                 AppSettings.getInstance().setStartersListInPref(foodDetailList);
-                cartToolbarCountListener.updateCartToolbarCount(false, true);
+                cartToolbarCountListener.updateCartToolbarCount(false, true, false, false);
 
             }
         });
@@ -111,7 +111,7 @@ public class StartersAdapter extends RecyclerView.Adapter<StartersAdapter.MyView
                     holder.textViewQuantityTotal.setText("" + foodDetails.getFoodQuantity());
 
                     AppSettings.getInstance().setStartersListInPref(foodDetailList);
-                    cartToolbarCountListener.updateCartToolbarCount(false, true);
+                    cartToolbarCountListener.updateCartToolbarCount(false, true, false, false);
 
                     if (foodDetails.getFoodQuantity() == 0) {
                         holder.textViewQuantityTotal.setTextColor(context.getResources().getColor(R.color.gray_color_dark));

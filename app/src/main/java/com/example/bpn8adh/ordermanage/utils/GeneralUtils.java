@@ -29,10 +29,21 @@ public class GeneralUtils {
         }
         return totalCount;
     }
+
     public static int getTotalCountStarters() {
-        int totalCount=0;
+        int totalCount = 0;
         if (AppSettings.getInstance().getStartersListFromPref() != null && !AppSettings.getInstance().getStartersListFromPref().isEmpty()) {
             for (FoodDetails foodDetails : AppSettings.getInstance().getStartersListFromPref()) {
+                totalCount = totalCount + foodDetails.getFoodQuantity();
+            }
+        }
+        return (totalCount);
+    }
+
+    public static int getTotalCountSoup() {
+        int totalCount = 0;
+        if (AppSettings.getInstance().getSoupListFromPref() != null && !AppSettings.getInstance().getSoupListFromPref().isEmpty()) {
+            for (FoodDetails foodDetails : AppSettings.getInstance().getSoupListFromPref()) {
                 totalCount = totalCount + foodDetails.getFoodQuantity();
             }
         }

@@ -26,12 +26,16 @@ public class AppSettings {
     private static final String SP_NAME = "orderManage";
     private static final String SP_CART_LIST = "cartList";
     private static final String SP_STARTERS_CART_LIST = "startersCartList";
+    private static final String SP_SOUP_CART_LIST = "soupCartList";
+
     public static final String SP_ORDER_HISTORY_CART_LIST = "orderHistoryCartList";
 
     private static AppSettings appSettings;
     private static Context context;
     private List<FoodDetails> cartDetailsList = new ArrayList<>();
     private List<FoodDetails> startersDetailsLists = new ArrayList<>();
+    private List<FoodDetails> soupDetailsLists = new ArrayList<>();
+
     private SharedPreferences sharedPreference;
     private boolean isEditCart;
     private FirebaseManager firebaseInstance;
@@ -65,6 +69,14 @@ public class AppSettings {
 
     public List<FoodDetails> getStartersDetailsLists() {
         return startersDetailsLists;
+    }
+
+    public void setSoupDetailsLists(List<FoodDetails> soupDetailsLists) {
+        this.soupDetailsLists = soupDetailsLists;
+    }
+
+    public List<FoodDetails> getSoupDetailsLists() {
+        return soupDetailsLists;
     }
 
     public void clearSharedPrefData() {
@@ -128,6 +140,24 @@ public class AppSettings {
 
     public List<FoodDetails> getStartersListFromPref() {
         String json = getSharedPreference().getString(SP_STARTERS_CART_LIST, "");
+        Type type = new TypeToken<List<FoodDetails>>() {
+        }.getType();
+
+        List<FoodDetails> objects = new ArrayList<>();
+        if ((new Gson().fromJson(json, type)) != null) {
+            objects.addAll((Collection<? extends FoodDetails>) new Gson().fromJson(json, type));
+        }
+        return objects;
+    }
+
+    public void setSoupListInPref(List<FoodDetails> foodDetailsList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(foodDetailsList);
+        getSharedPreferenceEditor().putString(SP_SOUP_CART_LIST, json).commit();
+    }
+
+    public List<FoodDetails> getSoupListFromPref() {
+        String json = getSharedPreference().getString(SP_SOUP_CART_LIST, "");
         Type type = new TypeToken<List<FoodDetails>>() {
         }.getType();
 

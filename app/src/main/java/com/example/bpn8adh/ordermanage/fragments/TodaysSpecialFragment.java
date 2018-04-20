@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
@@ -22,19 +21,17 @@ import com.example.bpn8adh.ordermanage.interfaces.UiUpdateListener;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 import com.example.bpn8adh.ordermanage.utils.DialogUtils;
-import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodaysSpecialFragment extends Fragment implements UiUpdateListener{
+public class TodaysSpecialFragment extends Fragment implements UiUpdateListener {
     private static final String MSG_ADD_TO_CART_SUCCESS = "Items added to cart succesfully";
     private static final String MSG_ADD_TO_CART_FAIL = "Please select item to add";
     @BindView(R.id.recyclerView)
@@ -71,8 +68,8 @@ public class TodaysSpecialFragment extends Fragment implements UiUpdateListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-            progressDialog = DialogUtils.showProgressDialog(getActivity(), null, getString(R.string.msg_progress_fetching_data), true, false);
-            FirebaseManager.getInstance().getTodaysSpecialList(new TodaysSpecialCallback(this));
+        progressDialog = DialogUtils.showProgressDialog(getActivity(), null, getString(R.string.msg_progress_fetching_data), true, false);
+        FirebaseManager.getInstance().getTodaysSpecialList(new TodaysSpecialCallback(this));
     }
 
     @Override
