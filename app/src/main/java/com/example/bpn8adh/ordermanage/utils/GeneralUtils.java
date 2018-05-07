@@ -49,4 +49,13 @@ public class GeneralUtils {
         }
         return (totalCount);
     }
+    public static int getTotalCountMainCourse() {
+        int totalCount = 0;
+        if (AppSettings.getInstance().getMainCourseListFromPref() != null && !AppSettings.getInstance().getMainCourseListFromPref().isEmpty()) {
+            for (FoodDetails foodDetails : AppSettings.getInstance().getMainCourseListFromPref()) {
+                totalCount = totalCount + foodDetails.getFoodQuantity();
+            }
+        }
+        return (totalCount);
+    }
 }

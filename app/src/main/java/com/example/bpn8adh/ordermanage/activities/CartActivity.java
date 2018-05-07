@@ -62,6 +62,7 @@ public class CartActivity extends AppCompatActivity {
     private List<FoodDetails> startersCartDetailsList = new ArrayList<>();
     private List<FoodDetails> todaySpecialcartDetailsList = new ArrayList<>();
     private List<FoodDetails> soupCartDetailsList = new ArrayList<>();
+    private List<FoodDetails> mainCourseCartDetailsList = new ArrayList<>();
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, CartActivity.class);
@@ -116,14 +117,27 @@ public class CartActivity extends AppCompatActivity {
                 }
             }
         }
+        if (OrderManageApplication.getSettings().getMainCourseListFromPref() != null && !OrderManageApplication.getSettings().getMainCourseListFromPref().isEmpty()) {
+            for (FoodDetails cartDetails : OrderManageApplication.getSettings().getMainCourseListFromPref()) {
+                if (cartDetails.getFoodQuantity() != 0) {
+                    Log.d(TAG, "onCreate: todays ===>" + cartDetails.getFoodName());
+                    Log.d(TAG, "onCreate: todays ===>" + cartDetails.getFoodQuantity());
+                    mainCourseCartDetailsList.add(cartDetails);
+                    totalPrice = totalPrice + cartDetails.getFoodPrice() * cartDetails.getFoodQuantity();
+                }
+            }
+        }
+
         cartDetailsList.addAll(startersCartDetailsList);
         cartDetailsList.addAll(todaySpecialcartDetailsList);
         cartDetailsList.addAll(soupCartDetailsList);
+        cartDetailsList.addAll(mainCourseCartDetailsList);
 
         cartTotalPrice.setText("" + totalPrice);
         OrderManageApplication.getSettings().setCartListInPref(todaySpecialcartDetailsList);
         OrderManageApplication.getSettings().setStartersListInPref(startersCartDetailsList);
         OrderManageApplication.getSettings().setSoupListInPref(soupCartDetailsList);
+        OrderManageApplication.getSettings().setMainCourseListInPref(soupCartDetailsList);
 
         cartAdapter = new CartAdapter(CartActivity.this, cartDetailsList);
         recyclerView.setAdapter(cartAdapter);
@@ -174,10 +188,12 @@ public class CartActivity extends AppCompatActivity {
                 startersCartDetailsList.clear();
                 todaySpecialcartDetailsList.clear();
                 soupCartDetailsList.clear();
+                mainCourseCartDetailsList.clear();
 //                AppSettings.getInstance().setCartToolbarCountInPref(0);
                 AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
                 AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
                 AppSettings.getInstance().setSoupListInPref(soupCartDetailsList);
+                AppSettings.getInstance().setMainCourseListInPref(mainCourseCartDetailsList);
 
                 cartAdapter.notifyDataSetChanged();
                 finish();
@@ -209,9 +225,12 @@ public class CartActivity extends AppCompatActivity {
                 startersCartDetailsList.clear();
                 todaySpecialcartDetailsList.clear();
                 soupCartDetailsList.clear();
+                mainCourseCartDetailsList.clear();
+
                 AppSettings.getInstance().setCartListInPref(todaySpecialcartDetailsList);
                 AppSettings.getInstance().setStartersListInPref(startersCartDetailsList);
                 AppSettings.getInstance().setSoupListInPref(soupCartDetailsList);
+                AppSettings.getInstance().setMainCourseListInPref(mainCourseCartDetailsList);
 
                 cartAdapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -231,5 +250,4 @@ public class CartActivity extends AppCompatActivity {
                 POSITIVE_BTN_TEXT, positiveDialogListener, NEGATIVE_BTN_TEXT, negativeDialogListener);
 
     }
-
 }

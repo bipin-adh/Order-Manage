@@ -27,6 +27,7 @@ public class AppSettings {
     private static final String SP_CART_LIST = "cartList";
     private static final String SP_STARTERS_CART_LIST = "startersCartList";
     private static final String SP_SOUP_CART_LIST = "soupCartList";
+    private static final String SP_MAIN_COURSE_CART_LIST = "mainCourseCartList";
 
     public static final String SP_ORDER_HISTORY_CART_LIST = "orderHistoryCartList";
 
@@ -35,6 +36,7 @@ public class AppSettings {
     private List<FoodDetails> cartDetailsList = new ArrayList<>();
     private List<FoodDetails> startersDetailsLists = new ArrayList<>();
     private List<FoodDetails> soupDetailsLists = new ArrayList<>();
+    private List<FoodDetails> mainCourseDetailsLists = new ArrayList<>();
 
     private SharedPreferences sharedPreference;
     private boolean isEditCart;
@@ -75,12 +77,17 @@ public class AppSettings {
         this.soupDetailsLists = soupDetailsLists;
     }
 
-    public List<FoodDetails> getSoupDetailsLists() {
-        return soupDetailsLists;
+    public List<FoodDetails> getMainCourseDetailsLists() {
+        return mainCourseDetailsLists;
     }
 
-    public void clearSharedPrefData() {
-        getSharedPreference().edit().remove(SP_CART_LIST).apply();
+
+    public void setMainCourseDetailsLists(List<FoodDetails> mainCourseDetailsLists) {
+        this.mainCourseDetailsLists = mainCourseDetailsLists;
+    }
+
+    public List<FoodDetails> getSoupDetailsLists() {
+        return soupDetailsLists;
     }
 
     public SharedPreferences getSharedPreference() {
@@ -158,6 +165,24 @@ public class AppSettings {
 
     public List<FoodDetails> getSoupListFromPref() {
         String json = getSharedPreference().getString(SP_SOUP_CART_LIST, "");
+        Type type = new TypeToken<List<FoodDetails>>() {
+        }.getType();
+
+        List<FoodDetails> objects = new ArrayList<>();
+        if ((new Gson().fromJson(json, type)) != null) {
+            objects.addAll((Collection<? extends FoodDetails>) new Gson().fromJson(json, type));
+        }
+        return objects;
+    }
+
+    public void setMainCourseListInPref(List<FoodDetails> foodDetailsList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(foodDetailsList);
+        getSharedPreferenceEditor().putString(SP_MAIN_COURSE_CART_LIST, json).commit();
+    }
+
+    public List<FoodDetails> getMainCourseListFromPref() {
+        String json = getSharedPreference().getString(SP_MAIN_COURSE_CART_LIST, "");
         Type type = new TypeToken<List<FoodDetails>>() {
         }.getType();
 

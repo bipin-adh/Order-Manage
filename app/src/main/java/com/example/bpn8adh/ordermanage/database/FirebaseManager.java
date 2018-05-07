@@ -1,5 +1,6 @@
 package com.example.bpn8adh.ordermanage.database;
 
+import com.example.bpn8adh.ordermanage.database.callbacks.MainCourseCallback;
 import com.example.bpn8adh.ordermanage.models.FoodDetails;
 import com.example.bpn8adh.ordermanage.utils.AppSettings;
 import com.google.firebase.database.DatabaseReference;
@@ -38,16 +39,24 @@ public class FirebaseManager {
         }
         return databaseReference;
     }
+
     public void getTodaysSpecialList(ValueEventListener valueEventListener) {
         Query childRef = getRootDbInstance().child("foodCategories").child("todaysSpecial").orderByChild("foodName");
         childRef.addValueEventListener(valueEventListener);
     }
+
     public void getStartersList(ValueEventListener valueEventListener) {
         Query childRef = getRootDbInstance().child("foodCategories").child("starters").orderByChild("foodName");
         childRef.addValueEventListener(valueEventListener);
     }
+
     public void getSoupList(ValueEventListener valueEventListener) {
         Query childRef = getRootDbInstance().child("foodCategories").child("soup").orderByChild("foodName");
+        childRef.addValueEventListener(valueEventListener);
+    }
+
+    public void getMainCourseList(ValueEventListener valueEventListener) {
+        Query childRef = getRootDbInstance().child("foodCategories").child("mainCourse").orderByChild("foodName");
         childRef.addValueEventListener(valueEventListener);
     }
 

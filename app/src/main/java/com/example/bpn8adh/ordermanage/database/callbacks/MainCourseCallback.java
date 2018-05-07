@@ -18,13 +18,13 @@ import java.util.Map;
  * Created by bpn8adh on 20/04/18.
  */
 
-public class SoupCallback implements ValueEventListener {
+public class MainCourseCallback implements ValueEventListener {
 
-    public static final String TAG = SoupCallback.class.getSimpleName();
+    public static final String TAG = MainCourseCallback.class.getSimpleName();
     private final UiUpdateListener uiUpdateListener;
     private List<FoodDetails> foodDetailsList = new ArrayList<>();
 
-    public SoupCallback(UiUpdateListener uiUpdateListener) {
+    public MainCourseCallback(UiUpdateListener uiUpdateListener) {
         this.uiUpdateListener = uiUpdateListener;
     }
 
@@ -45,7 +45,7 @@ public class SoupCallback implements ValueEventListener {
 
                 foodDetailsList.add(foodDetails);
             }
-            AppSettings.getInstance().setSoupDetailsLists(foodDetailsList);
+            AppSettings.getInstance().setMainCourseDetailsLists(foodDetailsList);
             if (uiUpdateListener != null) {
                 uiUpdateListener.success();
             }

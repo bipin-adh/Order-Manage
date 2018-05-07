@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class SoupFragment extends Fragment implements UiUpdateListener {
-    public static final String TAG = StartersFragment.class.getSimpleName();
+    public static final String TAG = SoupFragment.class.getSimpleName();
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 

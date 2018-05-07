@@ -14,7 +14,7 @@ import com.example.bpn8adh.ordermanage.utils.AppSettings;
 import com.example.bpn8adh.ordermanage.utils.DialogUtils;
 
 /**
- * Created by Sitaram on 8/19/2017.
+ * Created by Bipin on 8/19/2017.
  */
 public class SplashScreen extends AppCompatActivity {
 

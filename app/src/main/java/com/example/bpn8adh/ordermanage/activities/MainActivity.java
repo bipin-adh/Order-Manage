@@ -1,7 +1,6 @@
 package com.example.bpn8adh.ordermanage.activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,14 +24,11 @@ import android.widget.TextView;
 import com.example.bpn8adh.ordermanage.OrderManageApplication;
 import com.example.bpn8adh.ordermanage.R;
 import com.example.bpn8adh.ordermanage.adapters.TabPagerAdapter;
-import com.example.bpn8adh.ordermanage.database.FirebaseManager;
-import com.example.bpn8adh.ordermanage.database.callbacks.TodaysSpecialCallback;
 import com.example.bpn8adh.ordermanage.fragments.MainCourseFragment;
 import com.example.bpn8adh.ordermanage.fragments.SoupFragment;
 import com.example.bpn8adh.ordermanage.fragments.StartersFragment;
 import com.example.bpn8adh.ordermanage.fragments.TodaysSpecialFragment;
 import com.example.bpn8adh.ordermanage.interfaces.CartToolbarCountListener;
-import com.example.bpn8adh.ordermanage.interfaces.UiUpdateListener;
 import com.example.bpn8adh.ordermanage.utils.DialogUtils;
 import com.example.bpn8adh.ordermanage.utils.GeneralUtils;
 
@@ -55,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
     private int total1 = 0;
     private int total2 = 0;
     private int total3 = 0;
+    private int total4 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         adapter.addFragWithTitle(new TodaysSpecialFragment(), tabTitles[0]);
         adapter.addFragWithTitle(new StartersFragment(), tabTitles[1]);
         adapter.addFragWithTitle(new SoupFragment(), tabTitles[2]);
-//        adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
+        adapter.addFragWithTitle(new MainCourseFragment(), tabTitles[3]);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
     }
@@ -166,7 +163,10 @@ public class MainActivity extends AppCompatActivity implements CartToolbarCountL
         if (isSoup) {
             total3 = GeneralUtils.getTotalCountSoup();
         }
-        totalCount = total1 + total2 + total3;
+        if (isMainCourse) {
+            total4 = GeneralUtils.getTotalCountMainCourse();
+        }
+        totalCount = total1 + total2 + total3 + total4;
 
         if (totalCount == 0) {
             textViewCartListItemNum.setVisibility(View.GONE);
